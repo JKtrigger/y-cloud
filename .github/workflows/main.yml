@@ -38,11 +38,12 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "release.zip"
-        run: |
-          ls -a
-
       - name: S3 Publish
         run: | 
           echo https://github.com/marketplace/actions/s3-publish
+        # uses: osiegmar/s3-publish-action@v0
+      - name: Ls
+        run: | 
+          ls -a
         # uses: osiegmar/s3-publish-action@v0
           
