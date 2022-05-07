@@ -29,6 +29,9 @@ jobs:
         run: |
           pip install -r requirements.dev.txt
           pytest
+      - name: yc install
+        run: |
+          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
       - name: Update Release
         env:
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
@@ -40,5 +43,5 @@ jobs:
           zip release.zip src/*.py
           # export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} && export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} 
           aws --endpoint-url=https://storage.yandexcloud.net s3 cp release.zip s3://${AWS_BUCKET}/
-          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
-          source "/home/runner/.bashrc" && yc config set token ${IAM_TOKEN} && yc serverless function version create --function-name=menu --runtime python39 --entrypoint src.index.handler --memory 256m --execution-timeout 5s --source-path ./release.zip
+          yc config set token ${IAM_TOKEN} 
+          yc serverless function version create --function-name=menu --runtime python39 --entrypoint src.index.handler --memory 256m --execution-timeout 5s --source-path ./release.zip
