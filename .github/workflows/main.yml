@@ -41,7 +41,6 @@ jobs:
           IAM_TOKEN: ${{secrets.IAM_TOKEN}}
         run: | 
           zip release.zip src/*.py
-          # export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} && export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} 
           aws --endpoint-url=https://storage.yandexcloud.net s3 cp release.zip s3://${AWS_BUCKET}/
           yc config set token ${IAM_TOKEN} 
           yc serverless function version create --function-name=menu --runtime python39 --entrypoint src.index.handler --memory 256m --execution-timeout 5s --source-path ./release.zip
