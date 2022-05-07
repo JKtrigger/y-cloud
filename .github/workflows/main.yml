@@ -31,15 +31,15 @@ jobs:
           pytest
       - name: Update Release
         env:
-          AWS_ACCESS_KEY_ID: ${{BOT_TOKEN.AWS_ACCESS_KEY_ID}}
-          AWS_SECRET_ACCESS_KEY: ${{BOT_TOKEN.AWS_SECRET_ACCESS_KEY}}
-          AWS_DEFAULT_REGION: ${{BOT_TOKEN.AWS_DEFAULT_REGION}}
-          AWS_BUCKET: artifact
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          AWS_DEFAULT_REGION: ${{secrets.AWS_DEFAULT_REGION}}
+          AWS_BUCKET: ${{secrets.AWS_BUCKET}}
           IAM_TOKEN: ${{secrets.IAM_TOKEN}}
         run: | 
           zip release.zip src/*.py
-          ls -a
-          export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} && export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} && aws --endpoint-url=https://storage.yandexcloud.net s3 cp release.zip s3://${AWS_BUCKET}/
+          # export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} && export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} 
+          aws --endpoint-url=https://storage.yandexcloud.net s3 cp release.zip s3://${AWS_BUCKET}/
           curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
           yc config set token $IAM_TOKEN
           yc serverless function version create --function-name=menu --runtime python39 --entrypoint src.index.handler --memory 256m --execution-timeout 5s --source-path ./release.zip
