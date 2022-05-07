@@ -39,7 +39,7 @@ jobs:
         run: | 
           zip release.zip src/*.py
           ls -a
-          aws --endpoint-url=https://storage.yandexcloud.net s3 cp release.zip s3://${AWS_BUCKET}/
+          export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} && export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} && aws --endpoint-url=https://storage.yandexcloud.net s3 cp release.zip s3://${AWS_BUCKET}/
           curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
           yc config set token $IAM_TOKEN
           yc serverless function version create --function-name=menu --runtime python39 --entrypoint src.index.handler --memory 256m --execution-timeout 5s --source-path ./release.zip
