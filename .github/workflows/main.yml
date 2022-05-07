@@ -37,7 +37,6 @@ jobs:
           AWS_BUCKET: ${{secrets.AWS_BUCKET}}
           IAM_TOKEN: ${{secrets.IAM_TOKEN}}
         run: | 
-          apt-get install zip
           zip release.zip src/*.py
           ls -a
           aws --endpoint-url=https://storage.yandexcloud.net s3 cp release.zip s3://$AWS_BUCKET/
