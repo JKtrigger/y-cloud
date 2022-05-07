@@ -34,6 +34,13 @@ jobs:
         run: |
           pip install -r requirements.dev.txt
           pytest
+      - name: Upload Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "release.zip"
+        run: |
+          ls -a
+
       - name: S3 Publish
         run: | 
           echo https://github.com/marketplace/actions/s3-publish
