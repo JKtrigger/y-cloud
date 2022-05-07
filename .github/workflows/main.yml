@@ -22,28 +22,25 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
 
       # Runs a set of commands using the runners shell
       - name: Test
         run: |
           pip install -r requirements.dev.txt
           pytest
-      - name: Upload Release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "release.zip"
-      - name: S3 Publish
+      - name: Update Release
+        env:
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          AWS_DEFAULT_REGION: ${{secrets.AWS_DEFAULT_REGION}}
+          AWS_BUCKET: ${{secrets.AWS_BUCKET}}
+          IAM_TOKEN: ${{secrets.IAM_TOKEN}}
         run: | 
-          echo https://github.com/marketplace/actions/s3-publish
-        # uses: osiegmar/s3-publish-action@v0
-      - name: Ls
-        run: | 
+          apt install zip
+          zip release.zip src/*.py
           ls -a
-        # uses: osiegmar/s3-publish-action@v0
-          
+          aws --endpoint-url=https://storage.yandexcloud.net s3 cp release.zip s3://$AWS_BUCKET/
+          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+          yc config set token $IAM_TOKEN
+          yc serverless function version create --function-name=menu --runtime python39 --entrypoint src.index.handler --memory 256m --execution-timeout 5s --source-path ./release.zip
