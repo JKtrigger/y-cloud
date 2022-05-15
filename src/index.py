@@ -9,9 +9,9 @@ def handler(event, context):
             'Content-Type': 'application/json'
         },
         'body': json.dumps({
-            'method': 'sendMessage',
-            'chat_id': body['message']['chat']['id'],
-            'text':  'Я тебе ни хуя ни скажу',
+            'method': 'message_text',
+            'parse_mode': 'HTML',
+            'text':  '<html><body>Hello</body><footer>world</footer></html>',
         }),
         'isBase64Encoded': False
     }
