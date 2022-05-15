@@ -11,16 +11,16 @@ def handler(event, context):
         'body': json.dumps({
             'method': 'ReplyKeyboardMarkup',
             'chat_id': body['message']['chat']['id'],
-            # 'text':  {
-            #     "keyboard": [["uno :+1:"],
-            #                  ["uno \ud83d\udc4d", "due"],
-            #                  ["uno", "due", "tre"],
-            #                  ["uno", "due", "tre", "quattro"]]
-            # },
-            "keyboard": [["uno :+1:"],
-                         ["uno \ud83d\udc4d", "due"],
-                         ["uno", "due", "tre"],
-                         ["uno", "due", "tre", "quattro"]]
+            'text':  {
+                "keyboard": [["uno :+1:"],
+                             ["uno \ud83d\udc4d", "due"],
+                             ["uno", "due", "tre"],
+                             ["uno", "due", "tre", "quattro"]]
+            },
+            # "keyboard": [["uno :+1:"],
+            #              ["uno \ud83d\udc4d", "due"],
+            #              ["uno", "due", "tre"],
+            #              ["uno", "due", "tre", "quattro"]]
         }),
         'isBase64Encoded': False
     }
