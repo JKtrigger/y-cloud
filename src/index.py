@@ -17,12 +17,12 @@ def handler(event, context):
             #                  ["uno", "due", "tre"],
             #                  ["uno", "due", "tre", "quattro"]]
             # },
-            "ReplyKeyboardMarkup": {
+            "reply_markup": {"ReplyKeyboardMarkup": {
                 "keyboard": [
-                    [{"KeyboardButton": {"text": "test"}}]]},
+                    [{"KeyboardButton": {"text": "test1"}}]]}},
         }),
-        "ReplyKeyboardMarkup": {
+        "reply_markup": {"ReplyKeyboardMarkup": {
             "keyboard": [
-                [{"KeyboardButton": {"text": "test"}}]]},
+                [{"KeyboardButton": {"text": "test2"}}]]}},
         'isBase64Encoded': False
     }
