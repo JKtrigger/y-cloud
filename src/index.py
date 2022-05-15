@@ -17,10 +17,9 @@ def handler(event, context):
             #                  ["uno", "due", "tre"],
             #                  ["uno", "due", "tre", "quattro"]]
             # },
-            "keyboard": [["uno :+1:"],
-                         ["uno \ud83d\udc4d", "due"],
-                         ["uno", "due", "tre"],
-                         ["uno", "due", "tre", "quattro"]]
+            "ReplyKeyboardMarkup": {
+                "keyboard": [
+                    [{"KeyboardButton": {"text": "test"}}]]},
         }),
         "ReplyKeyboardMarkup": {
             "keyboard": [
