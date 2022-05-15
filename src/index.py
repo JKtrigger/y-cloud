@@ -2,7 +2,7 @@ import json
 
 
 def handler(event, context):
-    body = json.loads(event['body'])
+    #body = json.loads(event['body'])
     return {
         'statusCode': 200,
         'headers': {
