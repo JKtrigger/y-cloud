@@ -24,4 +24,3 @@ def handler(event, context):
         }),
         'isBase64Encoded': False
     }
-
