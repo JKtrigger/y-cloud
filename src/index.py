@@ -9,7 +9,7 @@ def handler(event, context):
             'Content-Type': 'application/json'
         },
         'body': json.dumps({
-            'method': 'message_text',
+            'method': 'InputMessageContent',
             'parse_mode': 'HTML',
             'text':  '<html><body>Hello</body><footer>world</footer></html>',
         }),
