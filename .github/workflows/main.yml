@@ -40,6 +40,7 @@ jobs:
           AWS_BUCKET: ${{secrets.AWS_BUCKET}}
           IAM_TOKEN: ${{secrets.IAM_TOKEN}}
         run: | 
+          cp requirements.txt ./src
           zip release.zip src/*.py
           aws --endpoint-url=https://storage.yandexcloud.net s3 cp release.zip s3://${AWS_BUCKET}/
           /home/runner/yandex-cloud/bin/yc config set token ${IAM_TOKEN} 
