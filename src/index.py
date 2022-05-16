@@ -1,9 +1,9 @@
 import json
-from telegram import __version__
+from telegram import TelegramObject
 
 
 def handler(event, context):
-    print(__version__)
+    print(TelegramObject)
     #body = json.loads(event['body'])
     return {
         'statusCode': 200,
