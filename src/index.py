@@ -19,6 +19,7 @@ def handler(event, context):
                         ["uno \ud83d\udc4d", "due"],
                         ["uno", "due", "tre"],
                         ["uno", "due", "tre", "quattro"]]},
-            }),
+            }
+        }),
         'isBase64Encoded': False
     }
