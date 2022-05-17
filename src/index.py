@@ -13,7 +13,7 @@ def handler(event, context):
             'chat_id': body['message']['chat']['id'],
             'text': body,
             "reply_markup": {
-                "reply_keyboard": [[
+                "custom_reply_keyboard": [[
                     {
                         "text": "A",
                         "callback_data": "A1"
