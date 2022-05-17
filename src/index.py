@@ -9,16 +9,15 @@ def handler(event, context):
             'Content-Type': 'application/json'
         },
         'body': json.dumps({
-            'method': 'sendMessage',
+            'method': 'ReplyKeyboardMarkup',
             'chat_id': body['message']['chat']['id'],
             'text': body,
             'reply_markup': {
-                'ReplyKeyboardMarkup':
-                    {'keyboard': [
-                        ["uno :+1:"],
-                        ["uno \ud83d\udc4d", "due"],
-                        ["uno", "due", "tre"],
-                        ["uno", "due", "tre", "quattro"]]},
+                'keyboard': [
+                    ["uno :+1:"],
+                    ["uno \ud83d\udc4d", "due"],
+                    ["uno", "due", "tre"],
+                    ["uno", "due", "tre", "quattro"]],
             }
         }),
         'isBase64Encoded': False
