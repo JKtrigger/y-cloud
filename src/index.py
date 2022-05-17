@@ -12,18 +12,9 @@ def handler(event, context):
             'method': 'sendMessage',
             'chat_id': body['message']['chat']['id'],
             'text': body,
-            "reply_markup": {
-                "custom_reply_keyboard": [[
-                    {
-                        "text": "A",
-                        "callback_data": "A1"
-                    },
-                    {
-                        "text": "B",
-                        "callback_data": "C1"
-                    }]
-                ]
-            },
+            "reply_markup": {"keyboard": [
+                ["opt 1", "opt 2", "opt 3"],
+                ["menu"]], "resize_keyboard": True},
         }),
         'isBase64Encoded': False
     }
