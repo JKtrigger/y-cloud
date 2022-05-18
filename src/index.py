@@ -1,4 +1,4 @@
-from application import commands
+from .application import commands
 from .telegram import BotChat
 
 
