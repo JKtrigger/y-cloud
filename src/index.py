@@ -1,11 +1,6 @@
-from src.application import commands
-from telegram import BotChat
+from application import commands
+from .telegram import BotChat
 
 
 def handler(event, _context):
     return commands.execute(BotChat(event))
-
-
-def error_handler():
-    # TODO :
-    return
