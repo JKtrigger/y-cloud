@@ -33,6 +33,7 @@ def end(request: BotChat):
             'text': 'any text',
             'reply_markup': {'keyboard': [
                 ['/end', '/start'],
+                [{"text": "FIRST_BUTTON", "otherkeys": "123"}],
                 ['/end', '/start']
             ], 'resize_keyboard': True},
         })
