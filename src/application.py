@@ -40,4 +40,4 @@ def end(request: BotChat):
 
 
 commands.add_handler(start, '/start')
-commands.add_handler(start, '/end')
+commands.add_handler(end, '/end')
