@@ -58,6 +58,7 @@ class BotChat:
         self.chat_id: str = self.message.bot["id"]
         self.request = self.message.request
         self.callback = self.message.callback
+        self.message_id = self.message.message_id
 
     def __repr__(self):
         return f"{self.__class__.__name__}(sender '{self.sender}', 'command': {self.command}, 'text': {self.text})"
