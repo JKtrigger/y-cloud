@@ -31,9 +31,9 @@ def end(request: BotChat):
             'method': 'sendMessage',
             'chat_id': request.chat_id,
             'text': 'any text',
-            'reply_markup': {'keyboard': [
-                [{"text": "FIRST_BUTTON", "otherkeys": "1"}],
-                [{"text": "SECOND_BUTTON", "otherkeys": "2"}],
+            'reply_markup': {'inline_keyboard': [
+                [{"text": "FIRST_BUTTON", "callback_data": "1"}, {"text": "THIRD_BUTTON", "callback_data": "1"}],
+                [{"text": "SECOND_BUTTON", "callback_data": "2"}],
             ], 'resize_keyboard': True},
         })
     }
