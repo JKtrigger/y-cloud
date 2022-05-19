@@ -15,8 +15,8 @@ def start(request: BotChat):
             'chat_id': request.chat_id,
             'text': 'any text',
             'reply_markup': {'keyboard': [
-                ['/start', '/end'],
-                ['/start', '/end']
+                ['/start', '/start'],
+                ['/start', '/start']
             ], 'resize_keyboard': True},
         })
     }
