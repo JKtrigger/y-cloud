@@ -46,7 +46,7 @@ def one(request: BotChat):
         'headers': {'Content-Type': 'application/json'},
         'isBase64Encoded': False,
         'body': json.dumps({
-            'method': 'sendMessage',
+            'method': 'editMessageText',
             'chat_id': request.chat_id,
             'text': 'any text',
             'reply_markup': {'inline_keyboard': [
