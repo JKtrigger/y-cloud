@@ -7,6 +7,8 @@ from .telegram import BotChat
 
 
 def default():
+    """Temp code
+    """
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
