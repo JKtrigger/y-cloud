@@ -48,11 +48,13 @@ def one(request: BotChat):
         'body': json.dumps({
             'method': 'sendMessage',
             'chat_id': request.chat_id,
-            'text': 'any text',
+            # 'text': 'any text',
             'reply_markup': {'inline_keyboard': [
                 [{"text": "start", "callback_data": "1"}, {"text": "start", "callback_data": "1"}],
                 [{"text": "end", "callback_data": "1"}],
-            ], 'resize_keyboard': True},
+            ],
+                '# resize_keyboard': True
+            },
         })
     }
 
