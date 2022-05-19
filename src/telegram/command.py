@@ -10,4 +10,6 @@ class CommandHandler:
 
 
 class CallbackHandler(CommandHandler):
-    pass
+    def execute(self, request):
+        # TODO ADD test for this
+        return self.handlers[request.request](request)
