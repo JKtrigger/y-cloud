@@ -23,8 +23,11 @@ def handler(event, _context):
     """handler of all calls from telegram
     """
     data = BotChat(event)
-    if data.command:
-        return commands.execute(BotChat(event))
-    if data.callback:
-        return callbacks.execute(BotChat(event))
-    return default()
+    try:
+        if data.command:
+            return commands.execute(BotChat(event))
+        if data.callback:
+            return callbacks.execute(BotChat(event))
+        return default()
+    except Exception as error:
+        return default()
