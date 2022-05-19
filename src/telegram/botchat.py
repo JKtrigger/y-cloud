@@ -14,11 +14,22 @@ class Message:
     date: int
     text: str
     command: bool
+    request: str
+    callback: bool  # TODO REFACTOR NAMES AND TYPES
     entities: list
 
 
 def event_to_dict(event: dict):
-    return json.loads(event['body'])['message']
+    body = json.loads(event['body'])
+    if 'callback_query' in body:
+        message = body['callback_query']['message']
+        message['callback'] = True
+        message['request'] = body['callback_query']['data']
+    else:
+        message = body['message']
+        message['callback'] = False
+        message['request'] = ''
+    return message
 
 
 def attrs_rename(message: dict):
@@ -45,6 +56,8 @@ class BotChat:
         self.command: bool = self.message.command
         self.text: str = self.message.text
         self.chat_id: str = self.message.bot["id"]
+        self.request = self.message.request
+        self.callback = self.message.callback
 
     def __repr__(self):
         return f"{self.__class__.__name__}(sender '{self.sender}', 'command': {self.command}, 'text': {self.text})"

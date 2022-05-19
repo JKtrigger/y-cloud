@@ -7,3 +7,7 @@ class CommandHandler:
 
     def execute(self, request):
         return self.handlers[request.text](request)
+
+
+class CallbackHandler(CommandHandler):
+    pass
