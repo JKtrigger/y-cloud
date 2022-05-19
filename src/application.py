@@ -60,6 +60,10 @@ def one(request: BotChat):
                 [{"text": "start", "callback_data": "1"}, {"text": "start", "callback_data": "1"}],
                 [{"text": "end", "callback_data": "1"}],
             ],
+                'reply_markup': {'keyboard': [
+                    ['/end', '/start'],
+                    ['/end', '/start']
+                ],
                 'resize_keyboard': True
             },
         })
