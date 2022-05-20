@@ -10,7 +10,7 @@ def start(request: BotChat):
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
-        'isBase64Encoded': False,
+        'isBase64Encoded': True,
         'body': json.dumps({
             'method': 'sendMessage',
             'chat_id': request.chat_id,
@@ -31,7 +31,7 @@ def photo(request: BotChat):
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
-        'isBase64Encoded': False,
+        'isBase64Encoded': True,
         'body': json.dumps({
             'method': 'sendMessage',
             'chat_id': request.chat_id,
@@ -48,7 +48,7 @@ def one(request: BotChat):
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
-        'isBase64Encoded': False,
+        'isBase64Encoded': True,
         'body': json.dumps({
             'message_id': request.message_id,
             'method': 'editMessageText',
