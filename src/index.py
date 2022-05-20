@@ -31,5 +31,6 @@ def handler(event, _context):
         if data.callback:
             return callbacks.execute(BotChat(event))
         return default()
-    except Exception as error:
+    except KeyError as error:
+        print(error)
         return default()
