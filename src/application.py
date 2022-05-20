@@ -14,16 +14,20 @@ def start(request: BotChat):
         'body': json.dumps({
             'method': 'sendMessage',
             'chat_id': request.chat_id,
-            'text': 'any text',
+            'text': (
+                'Добро пожаловать в Калининград!\n'
+                'Буду рад рассказать вам о своем доме!\n'
+            ),
             'reply_markup': {'keyboard': [
-                ['/start', '/start'],
-                ['/end', '/end']
+                ['/Посмотреть фото', '/Узнать примерную цену', '/Выбрать даты'],
+                ['/Условия Аренды', '/Оплатить бронь', '/Получить локацию'],
+                ['/Связаться со мной', '/Доп услуги', '/Оставить отзыв']
             ], 'resize_keyboard': True},
         })
     }
 
 
-def end(request: BotChat):
+def photo(request: BotChat):
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
@@ -32,16 +36,10 @@ def end(request: BotChat):
             'method': 'sendMessage',
             'chat_id': request.chat_id,
             'text': 'any text',
-            'reply_markup': {
-                'inline_keyboard': [
-                    [
-                        {"text": "/start", "callback_data": "1"},
-                        {"text": "/start", "callback_data": "1"}],
-                    [
-                        {"text": "/end", "callback_data": "1"}
-                    ],
-                ],
-                'resize_keyboard': True},
+            'reply_markup': {'keyboard': [
+                ['/Дом', '/Участок', '/Лес'],
+                ['/Назад', '/Море', '']
+            ], 'resize_keyboard': True},
         })
     }
 
@@ -68,5 +66,6 @@ def one(request: BotChat):
 
 
 commands.add_handler(start, '/start')
-commands.add_handler(end, '/end')
-callbacks.add_handler(one, '1')
+commands.add_handler(start, '/Назад')
+commands.add_handler(photo, '/photo')
+# callbacks.add_handler(one, '1')
