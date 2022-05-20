@@ -25,6 +25,7 @@ def handler(event, _context):
     """handler of all calls from telegram
     """
     data = BotChat(event)
+    print(event)
     try:
         if data.command:
             return commands.execute(BotChat(event))
