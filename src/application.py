@@ -67,5 +67,5 @@ def one(request: BotChat):
 
 commands.add_handler(start, '/start')
 commands.add_handler(start, '/Посмотреть фото')
-commands.add_handler(photo, '/photo')
+commands.add_handler(photo, '/Назад')
 # callbacks.add_handler(one, '1')
