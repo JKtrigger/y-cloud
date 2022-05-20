@@ -19,7 +19,7 @@ def start(request: BotChat):
                 'Буду рад рассказать вам о своем доме!\n'
             ),
             'reply_markup': {'keyboard': [
-                ['/Посмотреть фото', '/Узнать примерную цену', '/Выбрать даты'],
+                ['/Посмотреть фото', '/Const', '/Выбрать даты'],
                 ['/Условия Аренды', '/Оплатить бронь', '/Получить локацию'],
                 ['/Связаться со мной', '/Доп услуги', '/Оставить отзыв']
             ], 'resize_keyboard': True},
@@ -38,7 +38,7 @@ def photo(request: BotChat):
             'text': 'any text',
             'reply_markup': {'keyboard': [
                 ['/Дом', '/Участок', '/Лес'],
-                ['/Назад', '/Море', '']
+                ['/Назад', '/Море', '/Случайность']
             ], 'resize_keyboard': True},
         })
     }
@@ -68,4 +68,5 @@ def one(request: BotChat):
 commands.add_handler(start, '/start')
 commands.add_handler(start, '/Назад')
 commands.add_handler(photo, '/Посмотреть фото')
+commands.add_handler(photo, '/Const')
 # callbacks.add_handler(one, '1')
