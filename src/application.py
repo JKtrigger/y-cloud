@@ -1,16 +1,17 @@
 import json
 
-from src.telegram import BotChat, CommandHandler, CallbackHandler
+from src.telegram import BotChat, CommandHandler, CallbackHandler, TextHandler
 
 commands = CommandHandler()
 callbacks = CallbackHandler()
+texts = TextHandler()
 
 
 def start(request: BotChat):
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
-        'isBase64Encoded': True,
+        'isBase64Encoded': False,
         'body': json.dumps({
             'method': 'sendMessage',
             'chat_id': request.chat_id,
@@ -19,9 +20,9 @@ def start(request: BotChat):
                 'Буду рад рассказать вам о своем доме!\n'
             ),
             'reply_markup': {'keyboard': [
-                ['/Посмотреть фото', '/Const', '/Выбрать даты'],
-                ['/Условия Аренды', '/Оплатить бронь', '/Получить локацию'],
-                ['/Связаться со мной', '/Доп услуги', '/Оставить отзыв']
+                ['Посмотреть фото', 'Цена', 'Выбрать даты'],
+                ['Условия Аренды', 'Оплатить бронь', 'Получить локацию'],
+                ['Связаться со мной', 'Доп услуги', 'Оставить отзыв']
             ], 'resize_keyboard': True},
         })
     }
@@ -31,14 +32,14 @@ def photo(request: BotChat):
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
-        'isBase64Encoded': True,
+        'isBase64Encoded': False,
         'body': json.dumps({
             'method': 'sendMessage',
             'chat_id': request.chat_id,
             'text': 'any text',
             'reply_markup': {'keyboard': [
-                ['/Дом', '/Участок', '/Лес'],
-                ['/Назад', '/Море', '/Случайность']
+                ['Дом', 'Участок', 'Лес'],
+                ['Назад', 'Море', 'Случайность']
             ], 'resize_keyboard': True},
         })
     }
@@ -48,7 +49,7 @@ def one(request: BotChat):
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
-        'isBase64Encoded': True,
+        'isBase64Encoded': False,
         'body': json.dumps({
             'message_id': request.message_id,
             'method': 'editMessageText',
@@ -66,7 +67,7 @@ def one(request: BotChat):
 
 
 commands.add_handler(start, '/start')
-commands.add_handler(start, '/Назад')
-commands.add_handler(photo, '/Посмотреть фото')
+commands.add_handler(start, 'Назад')
+commands.add_handler(photo, 'Посмотреть фото')
 commands.add_handler(photo, '/Const')
 # callbacks.add_handler(one, '1')

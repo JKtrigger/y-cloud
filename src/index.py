@@ -2,7 +2,7 @@
 """
 import json
 
-from .application import commands, callbacks
+from .application import commands, callbacks, texts
 from .telegram import BotChat
 
 
@@ -31,6 +31,8 @@ def handler(event, _context):
             return commands.execute(BotChat(event))
         if data.callback:
             return callbacks.execute(BotChat(event))
+        if not (data.command and data.callback):
+            return texts.execute(BotChat(event))
         return default()
     except KeyError as error:
         print(error)

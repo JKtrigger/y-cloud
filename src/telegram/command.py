@@ -13,3 +13,7 @@ class CallbackHandler(CommandHandler):
     def execute(self, request):
         # TODO ADD test for this
         return self.handlers[request.request](request)
+
+
+class TextHandler(CommandHandler):
+    pass
