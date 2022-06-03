@@ -47,8 +47,7 @@ def photo(request: BotChat):
     }
 
 
-def one(request: BotChat):
-    print('one')
+def month_selector(request: BotChat):
     to_day = datetime.today()
     dict_calendar: dict = TelegramCalendar().to_telegram(to_day.year, to_day.month)
     dived_num = 4
@@ -56,14 +55,12 @@ def one(request: BotChat):
     is_full_row = rest_division == 0
     len_lines = len(dict_calendar) // dived_num + int(not is_full_row)
     inline_keyboard = []
-    buttons = [{"text": month_name, "callback_data": "1"} for month_name in dict_calendar]
+    buttons = [{"text": month_name, "callback_data": month_name} for month_name in dict_calendar]
     for index in range(0, len_lines):
-
         inline_keyboard.append(buttons[index*dived_num: index*dived_num + dived_num])
     if not is_full_row:
         for each_missing_button in range(0, 4 - rest_division):
             inline_keyboard[len_lines-1].append({"text": "_", "callback_data": "1"})
-    print(f'inline_keyboard={inline_keyboard}')
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
@@ -81,11 +78,30 @@ def one(request: BotChat):
     }
 
 
+def jul(request: BotChat):
+    return {
+        'statusCode': 200,
+        'headers': {'Content-Type': 'application/json'},
+        'isBase64Encoded': False,
+        'body': json.dumps({
+            'message_id': request.message_id,
+            'method': 'sendMessage',
+            'chat_id': request.chat_id,
+            'text': 'Выбери месяц',
+            'reply_markup': {
+                'inline_keyboard': [[{"text": "_", "callback_data": "1"}]],
+                'resize_keyboard': True
+            },
+        })
+    }
+
+
 commands.add_handler(start, '/start')
 texts.add_handler(start, 'Назад')
 texts.add_handler(photo, 'Посмотреть фото')
-texts.add_handler(one, 'Выбрать даты')
-texts.add_handler(one, '/1')
+texts.add_handler(month_selector, 'Выбрать даты')
+texts.add_handler(month_selector, '/1')
 commands.add_handler(photo, '/Const')
-callbacks.add_handler(one, '1')
-commands.add_handler(one, '/1')
+callbacks.add_handler(month_selector, '1')
+callbacks.add_handler(month_selector, 'jul')
+commands.add_handler(month_selector, '/1')
