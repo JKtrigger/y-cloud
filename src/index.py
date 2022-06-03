@@ -26,6 +26,7 @@ def handler(event, _context):
     """
     data = BotChat(event)
     print(event)
+    print(data)
     try:
         if data.command:
             return commands.execute(BotChat(event))

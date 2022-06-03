@@ -61,4 +61,11 @@ class BotChat:
         self.message_id = self.message.message_id
 
     def __repr__(self):
-        return f"{self.__class__.__name__}(sender '{self.sender}', 'command': {self.command}, 'text': {self.text})"
+        return (
+            f"{self.__class__.__name__}"
+            f"("
+            f"sender '{self.sender}', "
+            f"'command': {self.command}, "
+            f"'text': {self.text})"
+            f"'callback': {self.callback})"
+        )
