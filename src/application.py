@@ -70,11 +70,11 @@ def one(request: BotChat):
         'isBase64Encoded': False,
         'body': json.dumps({
             'message_id': request.message_id,
-            'method': 'editMessageText',
+            'method': 'sendMessage',
             'chat_id': request.chat_id,
             'text': 'Выбери месяц',
             'reply_markup': {
-                'inline_keyboard': [inline_keyboard],
+                'inline_keyboard': inline_keyboard,
                 'resize_keyboard': True
             },
         })
