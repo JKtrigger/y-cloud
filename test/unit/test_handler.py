@@ -1,6 +1,4 @@
 from src import telegram
-from src.application import texts
-from test.bin.uncode_event import request_from_button
 from test.unit.event import event_command
 
 
@@ -14,12 +12,3 @@ def test_request_handle():
     requests_handler = telegram.CommandHandler()
     requests_handler.add_handler(start, '/start')
     assert requests_handler.execute(bot_chat) == "123"
-
-
-# def test_request_unicode():
-#     bot_chat = telegram.BotChat(request_from_button)
-#     import ipdb
-#     ipdb.set_trace() # FIXME
-#     texts.execute(bot_chat)
-#     import ipdb
-#     ipdb.set_trace() # FIXME
