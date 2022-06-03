@@ -57,6 +57,7 @@ def one(request: BotChat):
     inline_keyboard = []
     buttons = [{"text": month_name, "callback_data": "1"} for month_name in dict_calendar]
     for index in range(0, len_lines):
+
         inline_keyboard.append(buttons[index*dived_num: index*dived_num + dived_num])
     if not is_full_row:
         for each_missing_button in range(0, 4 - rest_division):
