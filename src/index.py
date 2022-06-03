@@ -6,7 +6,7 @@ from .application import commands, callbacks, texts
 from .telegram import BotChat
 
 
-def default():
+def default(text):
     """Temp code
     """
     return {
@@ -16,7 +16,7 @@ def default():
         'body': json.dumps({
             'method': 'sendMessage',
             'chat_id': 'default',
-            'text': 'any text'
+            'text': text
         })
     }
 
@@ -33,7 +33,7 @@ def handler(event, _context):
             return callbacks.execute(BotChat(event))
         if not (data.command and data.callback):
             return texts.execute(BotChat(event))
-        return default()
+        return default(text="not found")
     except KeyError as error:
         print(error)
-        return default()
+        return default(text=str(error))
