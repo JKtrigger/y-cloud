@@ -48,6 +48,7 @@ def photo(request: BotChat):
 
 
 def one(request: BotChat):
+    print('one')
     to_day = datetime.today()
     dict_calendar: dict = TelegramCalendar().to_telegram(to_day.year, to_day.month)
     dived_num = 4
@@ -62,7 +63,7 @@ def one(request: BotChat):
     if not is_full_row:
         for each_missing_button in range(0, 4 - rest_division):
             inline_keyboard[len_lines-1].append({"text": "_", "callback_data": "1"})
-
+    print(f'inline_keyboard={inline_keyboard}')
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},

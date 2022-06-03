@@ -64,8 +64,8 @@ class BotChat:
         return (
             f"{self.__class__.__name__}"
             f"("
-            f"sender '{self.sender}', "
-            f"'command': {self.command}, "
-            f"'text': {self.text})"
-            f"'callback': {self.callback})"
+            f"sender: '{self.sender}', "
+            f"command: {self.command}, "
+            f"text: {self.text},"
+            f"callback: {self.callback})"
         )
