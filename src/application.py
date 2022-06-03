@@ -85,7 +85,7 @@ def jul(request: BotChat):
         'isBase64Encoded': False,
         'body': json.dumps({
             'message_id': request.message_id,
-            'method': 'sendMessage',
+            'method': 'editMessageText',
             'chat_id': request.chat_id,
             'text': 'Выбери месяц',
             'reply_markup': {
