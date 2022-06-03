@@ -74,7 +74,7 @@ def one(request: BotChat):
             'chat_id': request.chat_id,
             'text': 'Выбери месяц',
             'reply_markup': {
-                'inline_keyboard': inline_keyboard,
+                'inline_keyboard': [inline_keyboard],
                 'resize_keyboard': True
             },
         })
