@@ -117,7 +117,17 @@ def payments(request: BotChat):
             'payload': 'Дата получения: от кого и за что ',
             'start_parameter': str(uuid.uuid4()),
             'protect_content': True,
-            'prices': [{"label": "Мега", "amount": 500}]
+            'prices': [{"label": "Мега", "amount": 500}],
+            'need_phone_number': True,
+            'send_phone_number_to_provider': True,
+            'provider_data': {
+                'receipt': {'items': [{
+                    'description': 'Вжик',
+                    'quantity': '1.00',
+                    'amount': {'value': '500.00',  'currency': 'RUB'},
+                    'vat_code': 1
+                }]}
+            }
         })
     }
 
