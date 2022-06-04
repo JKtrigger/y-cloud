@@ -100,6 +100,7 @@ def jul(request: BotChat):
 
 def payments(request: BotChat):
     payment_token = os.environ["payment_token"]
+    print("payments:")
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
@@ -116,7 +117,7 @@ def payments(request: BotChat):
             'payload': 'Дата получения: от кого и за что ',
             'start_parameter': str(uuid.uuid4()),
             'protect_content': True,
-            'total_amount': 500,
+            'prices': [{"label": "Мега", "amount": 500}]
         })
     }
 
