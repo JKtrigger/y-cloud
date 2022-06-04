@@ -1,4 +1,6 @@
 import json
+import os
+import uuid
 from datetime import datetime
 
 from src.telegram import BotChat, CommandHandler, CallbackHandler, TextHandler
@@ -96,8 +98,33 @@ def jul(request: BotChat):
     }
 
 
+def payments(request: BotChat):
+    payment_token = os.environ["payment_token"]
+    return {
+        'statusCode': 200,
+        'headers': {'Content-Type': 'application/json'},
+        'isBase64Encoded': False,
+        'body': json.dumps({
+            'message_id': request.message_id,
+            'method': 'sendInvoice',
+            'chat_id': request.chat_id,
+            'text': 'Оплата',
+            'provider_token': payment_token,
+            'currency': 'RUB',
+            'title': 'Предоплата по сделке',
+            'description': 'Оплата за период с 4 по 5 мая - Например',
+            'payload': 'Дата получения: от кого и за что ',
+            'start_parameter': str(uuid.uuid4()),
+            'protect_content': True,
+            'total_amount': 500,
+        })
+    }
+
+
+# The idea is getting fast fail cases first
 commands.add_handler(start, '/start')
 texts.add_handler(start, 'Назад')
+texts.add_handler(payments, 'Оплатить бронь')
 texts.add_handler(photo, 'Посмотреть фото')
 texts.add_handler(month_selector, 'Выбрать даты')
 texts.add_handler(month_selector, '/1')
