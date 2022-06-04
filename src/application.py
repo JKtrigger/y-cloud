@@ -111,7 +111,7 @@ def payments(request: BotChat):
             'chat_id': request.chat_id,
             'text': 'Оплата',
             'provider_token': payment_token,
-            'currency': 'RUB',
+            'currency': 'rub',
             'title': '123',
             'description': '123',
             'payload': '123',
@@ -120,7 +120,7 @@ def payments(request: BotChat):
             'prices': [{"label": "Мега", "amount": 500}],
             'need_phone_number': True,
             'send_phone_number_to_provider': True,
-            'provider_data': {
+            'provider_data': json.dumps({
                 'phone_number': '+79210071773',
                 'receipt': {'items': [{
                     'description': 'Вжик',
@@ -128,7 +128,7 @@ def payments(request: BotChat):
                     'amount': {'value': '500.00',  'currency': 'RUB'},
                     'vat_code': 1
                 }]}
-            }
+            })
         })
     }
 
