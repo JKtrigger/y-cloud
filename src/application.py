@@ -3,12 +3,13 @@ import os
 import uuid
 from datetime import datetime
 
-from src.telegram import BotChat, CommandHandler, CallbackHandler, TextHandler
+from src.telegram import BotChat, CommandHandler, CallbackHandler, TextHandler, PaymentHandler
 from src.telegram.bot_calendar import TelegramCalendar
 
 commands = CommandHandler()
 callbacks = CallbackHandler()
 texts = TextHandler()
+payment = PaymentHandler()
 
 
 def start(request: BotChat):
@@ -100,7 +101,6 @@ def jul(request: BotChat):
 
 def payments(request: BotChat):
     payment_token = os.environ["payment_token"]
-    print(f"payments:{payment_token}")
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
@@ -112,23 +112,40 @@ def payments(request: BotChat):
             'text': 'Оплата',
             'provider_token': payment_token,
             'currency': 'rub',
-            'title': '123',
-            'description': '123',
-            'payload': '123',
+            'title': 'Тест оплата',
+            'description': 'всем привет !',
+            'payload': {
+                'unique_id': str(uuid.uuid4()),
+                'provider_token': os.environ["payment_token"]
+                },
             'start_parameter': str(uuid.uuid4()),
             'protect_content': True,
-            'prices': [{"label": "Мега", "amount": 500}],
+            'prices': [{"label": "Мега", "amount": 10 * 100}],
             'need_phone_number': True,
             'send_phone_number_to_provider': True,
             'provider_data': json.dumps({
-                'phone_number': '+79210071773',
+                'phone_number': True,
                 'receipt': {'items': [{
                     'description': 'Вжик',
                     'quantity': '1.00',
-                    'amount': {'value': '500.00',  'currency': 'RUB'},
+                    'amount': {'value': '10.00',  'currency': 'RUB'},
                     'vat_code': 1
                 }]}
             })
+        })
+    }
+
+
+def invoice_payload(request: BotChat):
+    return {
+        'statusCode': 200,
+        'headers': {'Content-Type': 'application/json'},
+        'isBase64Encoded': False,
+        'body': json.dumps({
+            'message_id': request.message_id,
+            'method': 'answerPreCheckoutQuery',
+            'pre_checkout_query_id': 1,
+            'ok': True
         })
     }
 
@@ -144,3 +161,4 @@ commands.add_handler(photo, '/Const')
 callbacks.add_handler(month_selector, '1')
 callbacks.add_handler(jul, 'jul')
 commands.add_handler(month_selector, '/1')
+payment.add_handler(invoice_payload, 'invoice_payload')

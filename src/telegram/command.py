@@ -17,3 +17,7 @@ class CallbackHandler(CommandHandler):
 
 class TextHandler(CommandHandler):
     pass
+
+
+class PaymentHandler(CommandHandler):
+    pass

@@ -2,7 +2,7 @@
 """
 import json
 
-from .application import commands, callbacks, texts
+from .application import commands, callbacks, texts, payment
 from .telegram import BotChat
 
 
@@ -28,6 +28,8 @@ def handler(event, _context):
     print(f"{event=}")
     print(f"{data=}")
     try:
+        if data.payment:
+            return payment.execute(BotChat(event))
         if data.command:
             return commands.execute(BotChat(event))
         if data.callback:
