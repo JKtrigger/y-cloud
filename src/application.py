@@ -143,9 +143,8 @@ def invoice_payload(request: BotChat):
         'headers': {'Content-Type': 'application/json'},
         'isBase64Encoded': False,
         'body': json.dumps({
-            'message_id': request.message_id,
             'method': 'answerPreCheckoutQuery',
-            'pre_checkout_query_id': 1,
+            'pre_checkout_query_id': request.message_id,
             'ok': True
         })
     }
