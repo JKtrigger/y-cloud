@@ -36,8 +36,6 @@ def event_to_dict(event: dict):
         message['request'] = ''
         message['payment'] = True
         message['chat'] = copy(message['from'])
-        import ipdb
-        ipdb.set_trace() # FIXME
         message['message_id'] = message['id']
         message['date'] = int(time.time())
         message['text'] = 'invoice_payload'
@@ -78,8 +76,6 @@ class BotChat:
         self.callback = self.message.callback
         self.message_id = self.message.message_id
         self.payment = self.message.payment
-        import ipdb
-        ipdb.set_trace() # FIXME
         self.pre_checkout_query_id = 1
 
     def __repr__(self):
