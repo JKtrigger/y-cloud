@@ -121,21 +121,22 @@ def payments(request: BotChat):
             'start_parameter': str(uuid.uuid4()),
             'protect_content': False,
             'prices': [{"label": "Мега", "amount": 100 * 100}],
-            'need_phone_number': True,
-            'send_phone_number_to_provider': True,
-            'provider_data': json.dumps({
-                'receipt': {'items': [{
-                    'description': 'Вжик',
-                    'quantity': '1.00',
-                    'amount': {'value': '100.00',  'currency': 'RUB'},
-                    'vat_code': 1
-                }]}
+            # 'need_phone_number': True,
+            # 'send_phone_number_to_provider': True,
+            # 'provider_data': json.dumps({
+            #     'receipt': {'items': [{
+            #         'description': 'Вжик',
+            #         'quantity': '1.00',
+            #         'amount': {'value': '100.00',  'currency': 'RUB'},
+            #         'vat_code': 1
+            #     }]}
             })
         })
     }
 
 
 def invoice_payload(request: BotChat):
+    # TODO SHUOLE
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
