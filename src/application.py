@@ -130,7 +130,7 @@ def payments(request: BotChat):
             #         'amount': {'value': '100.00',  'currency': 'RUB'},
             #         'vat_code': 1
             #     }]}
-            })
+            # })
         })
     }
 
