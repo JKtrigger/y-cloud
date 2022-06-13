@@ -82,6 +82,7 @@ def month_selector(request: BotChat):
 
 
 def jul(request: BotChat):
+    # todo use decorator here
     return {
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
