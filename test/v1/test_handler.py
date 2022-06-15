@@ -3,4 +3,4 @@ from test.bin import uncode_event
 
 
 def test_handler_v1():
-    botchat.handler(uncode_event.request_from_button)
+    botchat.entry_point(uncode_event.request_from_button)

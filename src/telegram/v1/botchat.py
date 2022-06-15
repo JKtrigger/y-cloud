@@ -66,7 +66,9 @@ class Listener:
         return self.functions[event_type]
 
     def execute(self, event: Event):
-        return self._actions_by_type(event.type)[event.key](event.body)
+        func = self._actions_by_type(event.type)[event.key]
+        utils.logger.info(f'{event.body=}', extra={'func': func.__name__})
+        return func(event.body)
 
 
 listener = Listener()
@@ -74,14 +76,15 @@ listener = Listener()
 
 def response(status):
     def wrapped(func):
-        # add wrap from func tools
+        @wraps(func)
         def inner(body):
-            return {
+            result = {
                 'statusCode': status,
                 'headers': {'Content-Type': 'application/json'},
                 'isBase64Encoded': False,
                 'body': json.dumps(func(body))
             }
+            return result
         return inner
     return wrapped
 
@@ -104,7 +107,7 @@ listener.add(photo, Event.Type.TEXT, 'Назад')
 
 
 @response(HTTP500)
-def error(text):
+def error_response(text):
     return {
         'method': 'sendMessage',
         'chat_id': 'default',
@@ -117,21 +120,21 @@ def event_logger(func):
     def wrapped(lambda_event, context=None):
         # context -> None for local debugging
         extra = {'func': func.__name__}
-        utils.logger.debug(f'{lambda_event=}', extra=extra)  # todo format to logger debug
-
         try:
             result = func(Event(lambda_event))
-            utils.logger.info(f'{result=}', extra=extra)
+            status_code = result['statusCode']
+            body = json.loads(result['body'])
+            utils.logger.info(f'{status_code=}, {body=}', extra=extra)
             return result
         except Exception as err:
-            utils.logger.error(f'{err=}', extra=extra)  # todo format to logger error
-            return error(f'{type(err)} > {err=}')
+            # TODO add test for this
+            utils.logger.error_response(f'{err=}', extra=extra)
+            return error_response(f'{type(err)} > {err=}')
     return wrapped
 
 
 @event_logger
-def handler(event):
+def entry_point(event):
     """handler of all calls from telegram
     """
-    utils.logger.debug(f'{event=}')
     return listener.execute(event)
