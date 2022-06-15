@@ -10,8 +10,8 @@ logger.setLevel(logging.NOTSET)
 
 class CustomFilter(logging.Filter):
     """
-    Add log formatting
-    [INFO] [wrapped -> handler] botchat.py:124 ...
+    Add value func to formatter
+    [2022-06-15 12:37:37,538] [INFO] [wrapped -> handler] botchat.py:124 ...
     """
     def filter(self, record):
         record.func = getattr(record, 'func', getattr(record, 'funcName'))
