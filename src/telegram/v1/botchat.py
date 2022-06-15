@@ -1,4 +1,7 @@
 import json
+from functools import wraps
+
+from src.telegram.v1 import utils
 
 HTTP500 = 500
 HTTP200 = 200
@@ -110,17 +113,19 @@ def error(text):
 
 
 def event_logger(func):
+    @wraps(func)
     def wrapped(lambda_event, context=None):
         # context -> None for local debugging
-        print(f'{lambda_event=}')  # todo format to logger debug
-        print(f'{context=}')
+        extra = {'func': func.__name__}
+        utils.logger.debug(f'{lambda_event=}', extra=extra)  # todo format to logger debug
+
         try:
             result = func(Event(lambda_event))
-            print(f'{result=}')
+            utils.logger.info(f'{result=}', extra=extra)
             return result
         except Exception as err:
-            print(f'{err=}')  # todo format to logger error
-            return error(f"{type(err)} > {err=}")
+            utils.logger.error(f'{err=}', extra=extra)  # todo format to logger error
+            return error(f'{type(err)} > {err=}')
     return wrapped
 
 
@@ -128,5 +133,5 @@ def event_logger(func):
 def handler(event):
     """handler of all calls from telegram
     """
-    print(f'{event=}')
+    utils.logger.debug(f'{event=}')
     return listener.execute(event)
