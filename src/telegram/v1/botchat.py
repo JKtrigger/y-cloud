@@ -22,7 +22,7 @@ class Event:
         Type.TEXT: lambda body: body['message']['text'],
         Type.CALLBACK: lambda x: x,
         Type.PAYMENT: lambda x: x,
-        Type.COMMAND: lambda x: x,
+        Type.COMMAND: lambda body: body['message']['text'],
     }
 
     def __init__(self, event: json):
