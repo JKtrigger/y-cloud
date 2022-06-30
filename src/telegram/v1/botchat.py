@@ -14,7 +14,7 @@ class Event:
     __type_mapping = {
         'callback_query': Type.CALLBACK,
         'pre_checkout_query': Type.PAYMENT,
-        'command': Type.COMMAND
+        'entities': Type.COMMAND
         # text used as default value
     }
 
@@ -35,7 +35,7 @@ class Event:
 
     def define_type(self):
         for type_ in self.__type_mapping:
-            if type_ in self.body:
+            if type_ in self.body.get('message'):
                 return self.__type_mapping[type_]
         return self.Type.TEXT
 

@@ -21,7 +21,7 @@ _from_user = {
             'type': 'private'
         },
         'date': 1651151842,
-        'text': 'any text'
+        'text': '/start'
     }
 }
 
