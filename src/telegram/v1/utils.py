@@ -25,6 +25,7 @@ def define_logger():
     format_string = "[%(asctime)s] [%(levelname)s] [%(funcName)s -> %(func)s] [%(filename)s:%(lineno)s] %(message)s"
     _logger = logging.getLogger(__name__)
     _logger.addFilter(CustomFilter())
+    _logger.setLevel(logging.INFO)
     handler = logging.StreamHandler()
     handler.setLevel(logging.INFO)
     formatter = logging.Formatter(format_string)
