@@ -1,7 +1,7 @@
 import json
 from functools import wraps
 
-from src.telegram.v1 import Event, logger, response, HTTP200
+from src.telegram.v1 import Event, logger, response, HTTP200, HTTP400
 from src.v1_application import listener
 
 
@@ -14,7 +14,7 @@ def error_500(text, chat_id):  # TODO  utils level application
     }
 
 
-@response(HTTP200)
+@response(HTTP400)
 def error_400(text, chat_id):  # TODO  utils level application
     return {
         'method': 'sendMessage',
