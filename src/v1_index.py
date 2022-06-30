@@ -1,24 +1,24 @@
 import json
 from functools import wraps
 
-from src.telegram.v1 import listener, Event, logger, response, HTTP400, HTTP500
+from src.telegram.v1 import listener, Event, logger, response, HTTP200
 
 
-@response(HTTP500)
+@response(HTTP200)
 def error_500(text):  # TODO  utils level application
     return {
         'method': 'sendMessage',
         'chat_id': 'default',
-        'text':  f'{text}'
+        'text':  f'{500} {text}'
     }
 
 
-@response(HTTP400)
+@response(HTTP200)
 def error_400(text):  # TODO  utils level application
     return {
         'method': 'sendMessage',
         'chat_id': 'default',
-        'text':  f'Опция : {text} - Не найдена.'
+        'text':  f'{400} : {text} - Не найдена.'
     }
 
 

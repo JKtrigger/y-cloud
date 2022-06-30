@@ -12,6 +12,7 @@ class Event:
         PAYMENT = 'payment'
 
     __type_mapping = {
+        # TODO
         'callback_query': Type.CALLBACK,
         'pre_checkout_query': Type.PAYMENT,
         'entities': Type.COMMAND
@@ -19,6 +20,7 @@ class Event:
     }
 
     __event_key_word_mapping = {
+        # TODO
         Type.TEXT: lambda body: body['message']['text'],
         Type.CALLBACK: lambda x: x,
         Type.PAYMENT: lambda x: x,
@@ -34,6 +36,7 @@ class Event:
         return self.__event_key_word_mapping[self.type](self.body)
 
     def define_type(self):
+        # TODO
         for type_ in self.__type_mapping:
             if type_ in self.body.get('message'):
                 return self.__type_mapping[type_]
