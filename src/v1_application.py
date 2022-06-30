@@ -27,5 +27,6 @@ def photo(body: dict):
         }
 
 
+listener.add(main_menu, Event.Type.COMMAND, '/start')
 listener.add(photo, Event.Type.TEXT, 'Посмотреть фото')
 listener.add(main_menu, Event.Type.TEXT, 'Назад')
