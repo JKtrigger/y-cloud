@@ -8,7 +8,7 @@ from test.unit.event import event_command
 
 def test_handler_un_exist_function(caplog):
     result = entry_point(uncode_event.request_unexpected)
-    assert result['statusCode'] == HTTP400, "To raise repeating"
+    assert result['statusCode'] == HTTP200, "To avoid repeating"
     assert json.loads(result['body'])['text'] == "400 : 'request_unexpected' - Не найдена."
     assert caplog.messages[1] == "error=KeyError('request_unexpected')"
 

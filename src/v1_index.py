@@ -14,7 +14,7 @@ def error_500(text, chat_id):  # TODO  utils level application
     }
 
 
-@response(HTTP400)
+@response(HTTP200)
 def error_400(text, chat_id):  # TODO  utils level application
     return {
         'method': 'sendMessage',
