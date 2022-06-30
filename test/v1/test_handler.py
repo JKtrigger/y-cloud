@@ -9,7 +9,7 @@ def test_handler_un_exist_function(caplog):
     result = entry_point(uncode_event.request_photo)
     assert result['statusCode'] == HTTP400
     assert json.loads(result['body'])['text'] == "Опция : 'Посмотреть фото' - Не найдена."
-    assert caplog.messages[0] == "error=KeyError('Посмотреть фото')"
+    assert caplog.messages[1] == "error=KeyError('Посмотреть фото')"
 
 
 def test_handler_photo(listener_fixture):
