@@ -1,10 +1,7 @@
 import json
-from functools import wraps
+from .utils import logger
 
-from src.telegram.v1 import utils
-
-HTTP500 = 500
-HTTP200 = 200
+__all__ = ['Event', 'listener']
 
 
 class Event:
@@ -67,74 +64,9 @@ class Listener:
 
     def execute(self, event: Event):
         func = self._actions_by_type(event.type)[event.key]
-        utils.logger.info(f'{event.body=}', extra={'func': func.__name__})
+        logger.info(f'{event.body=}', extra={'func': func.__name__})
         return func(event.body)
 
 
 listener = Listener()
 
-
-def response(status):
-    def wrapped(func):
-        @wraps(func)
-        def inner(body):
-            result = {
-                'statusCode': status,
-                'headers': {'Content-Type': 'application/json'},
-                'isBase64Encoded': False,
-                'body': json.dumps(func(body))
-            }
-            return result
-        return inner
-    return wrapped
-
-
-@response(HTTP200)
-def photo(body: dict):
-    return {
-            'method': 'sendMessage',
-            'chat_id': body['message']['chat']['id'],
-            'text': 'any text',
-            'reply_markup': {'keyboard': [
-                ['Дом', 'Участок', 'Лес'],
-                ['Назад', 'Море', 'Случайность']
-            ], 'resize_keyboard': True},
-        }
-
-
-listener.add(photo, Event.Type.TEXT, 'Посмотреть фото')
-listener.add(photo, Event.Type.TEXT, 'Назад')
-
-
-@response(HTTP500)
-def error_response(text):
-    return {
-        'method': 'sendMessage',
-        'chat_id': 'default',
-        'text':  f'Ошибка при выполнении операции :  {text}',
-    }
-
-
-def event_logger(func):
-    @wraps(func)
-    def wrapped(lambda_event, context=None):
-        # context -> None for local debugging
-        extra = {'func': func.__name__}
-        try:
-            result = func(Event(lambda_event))
-            status_code = result['statusCode']
-            body = json.loads(result['body'])
-            utils.logger.info(f'{status_code=}, {body=}', extra=extra)
-            return result
-        except Exception as err:
-            # TODO add test for this
-            utils.logger.error_response(f'{err=}', extra=extra)
-            return error_response(f'{type(err)} > {err=}')
-    return wrapped
-
-
-@event_logger
-def entry_point(event):
-    """handler of all calls from telegram
-    """
-    return listener.execute(event)

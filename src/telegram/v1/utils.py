@@ -1,11 +1,14 @@
+import json
 import logging
+from functools import wraps
 
 
-__all__ = ['logger']
+__all__ = ['logger', 'response', 'HTTP200', 'HTTP500', 'HTTP400']
 
-format_string = "[%(asctime)s] [%(levelname)s] [%(funcName)s -> %(func)s] [%(filename)s:%(lineno)s] %(message)s"
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.NOTSET)
+
+HTTP500 = 500
+HTTP400 = 400
+HTTP200 = 200
 
 
 class CustomFilter(logging.Filter):
@@ -18,9 +21,32 @@ class CustomFilter(logging.Filter):
         return True
 
 
-logger.addFilter(CustomFilter())
-handler = logging.StreamHandler()
-handler.setLevel(logging.NOTSET)
-formatter = logging.Formatter(format_string)
-handler.setFormatter(formatter)
-logger.addHandler(handler)
+def define_logger():
+    format_string = "[%(asctime)s] [%(levelname)s] [%(funcName)s -> %(func)s] [%(filename)s:%(lineno)s] %(message)s"
+    _logger = logging.getLogger(__name__)
+    _logger.setLevel(logging.NOTSET)
+    _logger.addFilter(CustomFilter())
+    handler = logging.StreamHandler()
+    handler.setLevel(logging.NOTSET)
+    formatter = logging.Formatter(format_string)
+    handler.setFormatter(formatter)
+    _logger.addHandler(handler)
+    return _logger
+
+
+logger = define_logger()
+
+
+def response(status):
+    def wrapped(func):
+        @wraps(func)
+        def inner(body):
+            result = {
+                'statusCode': status,
+                'headers': {'Content-Type': 'application/json'},
+                'isBase64Encoded': False,
+                'body': json.dumps(func(body))
+            }
+            return result
+        return inner
+    return wrapped
