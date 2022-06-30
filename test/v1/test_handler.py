@@ -9,7 +9,7 @@ from test.unit.event import event_command
 def test_handler_un_exist_function(caplog):
     result = entry_point(uncode_event.request_photo)
     assert result['statusCode'] == HTTP200, "To avoid repeating"
-    assert json.loads(result['body'])['text'] == "Опция : 'Посмотреть фото' - Не найдена."
+    assert json.loads(result['body'])['text'] == "400 : 'Посмотреть фото' - Не найдена."
     assert caplog.messages[1] == "error=KeyError('Посмотреть фото')"
 
 
