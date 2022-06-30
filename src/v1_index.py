@@ -5,19 +5,19 @@ from src.telegram.v1 import listener, Event, logger, response, HTTP200
 
 
 @response(HTTP200)
-def error_500(text):  # TODO  utils level application
+def error_500(text, chat_id):  # TODO  utils level application
     return {
         'method': 'sendMessage',
-        'chat_id': 'default',
+        'chat_id': chat_id,
         'text':  f'{500} {text}'
     }
 
 
 @response(HTTP200)
-def error_400(text):  # TODO  utils level application
+def error_400(text, chat_id):  # TODO  utils level application
     return {
         'method': 'sendMessage',
-        'chat_id': 'default',
+        'chat_id': chat_id,
         'text':  f'{400} : {text} - Не найдена.'
     }
 
@@ -27,8 +27,9 @@ def event_logger(func):  # TODO  utils level application
     def wrapped(lambda_event, context=None):
         # context -> None for local debugging
         extra = {'func': func.__name__}
+        logger.info(f'{Event(lambda_event)=}')
+        chat_id = Event(lambda_event).body['message']['chat']['id']
         try:
-            logger.info(f'{Event(lambda_event)=}')
             result = func(Event(lambda_event))
             status_code = result['statusCode']
             body = json.loads(result['body'])
@@ -36,10 +37,10 @@ def event_logger(func):  # TODO  utils level application
             return result
         except KeyError as error:
             logger.error(f'{error=}', extra=extra)
-            return error_400(f'{error}')
+            return error_400(f'{error}', chat_id)
         except Exception as error:
             logger.error(f'{error=}', extra=extra)
-            return error_500(f'{error=}')
+            return error_500(f'{error=}', chat_id)
     return wrapped
 
 

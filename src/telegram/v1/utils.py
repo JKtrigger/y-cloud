@@ -40,12 +40,12 @@ logger = define_logger()
 def response(status):
     def wrapped(func):
         @wraps(func)
-        def inner(body):
+        def inner(body, chat_id):
             result = {
                 'statusCode': status,
                 'headers': {'Content-Type': 'application/json'},
                 'isBase64Encoded': False,
-                'body': json.dumps(func(body))
+                'body': json.dumps(func(body, chat_id))
             }
             return result
         return inner
