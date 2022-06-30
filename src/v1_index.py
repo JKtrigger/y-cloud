@@ -28,6 +28,7 @@ def event_logger(func):  # TODO  utils level application
         # context -> None for local debugging
         extra = {'func': func.__name__}
         try:
+            logger.info(f'{Event(lambda_event)=}')
             result = func(Event(lambda_event))
             status_code = result['statusCode']
             body = json.loads(result['body'])
