@@ -10,7 +10,7 @@ def main_menu(body: dict, chat_id):
             'text': 'any text',
             'reply_markup': {'keyboard': [
                 ['🏠 Дом', '☭ Участок'],
-                ['⚓ Море' 'Назад']
+                ['⚓ Море', 'Назад']
             ], 'resize_keyboard': True},
         }
 
