@@ -1,11 +1,12 @@
-from src.telegram.v1 import listener, Event, response, HTTP200
+from src.telegram.v1 import Event, response, HTTP200
+from src.telegram.v1.botchat import Listener
 
 
 @response(HTTP200)
-def main_menu(body: dict):
+def main_menu(body: dict, chat_id):
     return {
             'method': 'sendMessage',
-            'chat_id': body['message']['chat']['id'],
+            'chat_id': chat_id,
             'text': 'any text',
             'reply_markup': {'keyboard': [
                 ['🏠 Дом', '☭ Участок'],
@@ -15,10 +16,10 @@ def main_menu(body: dict):
 
 
 @response(HTTP200)
-def photo(body: dict):
+def photo(body: dict, chat_id):
     return {
             'method': 'sendMessage',
-            'chat_id': body['message']['chat']['id'],
+            'chat_id': chat_id,
             'text': 'any text',
             'reply_markup': {'keyboard': [
                 ['🏠 Дом', '☭ Участок'],
@@ -27,6 +28,7 @@ def photo(body: dict):
         }
 
 
+listener = Listener()
 listener.add(main_menu, Event.Type.COMMAND, '/start')
 listener.add(photo, Event.Type.TEXT, 'Посмотреть фото')
 listener.add(main_menu, Event.Type.TEXT, 'Назад')

@@ -1,7 +1,8 @@
 import json
 from functools import wraps
 
-from src.telegram.v1 import listener, Event, logger, response, HTTP200
+from src.telegram.v1 import Event, logger, response, HTTP200
+from src.v1_application import listener
 
 
 @response(HTTP200)
@@ -27,10 +28,11 @@ def event_logger(func):  # TODO  utils level application
     def wrapped(lambda_event, context=None):
         # context -> None for local debugging
         extra = {'func': func.__name__}
-        logger.info(f'{Event(lambda_event)=}')
-        chat_id = Event(lambda_event).body['message']['chat']['id']
+        event = Event(lambda_event)
+        logger.info(f'{event=}')
+        chat_id = event.chat_id
         try:
-            result = func(Event(lambda_event))
+            result = func(event, chat_id)
             status_code = result['statusCode']
             body = json.loads(result['body'])
             logger.info(f'{status_code=}, {body=}', extra=extra)
@@ -45,7 +47,7 @@ def event_logger(func):  # TODO  utils level application
 
 
 @event_logger
-def entry_point(event):
+def entry_point(event, chat_id):
     """handler of all calls from telegram
     """
-    return listener.execute(event)
+    return listener.execute(event, chat_id)

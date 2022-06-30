@@ -5,7 +5,8 @@ name: CI
 
 on:
   push:
-    branches: [ main, refactor ]
+    branches: [ main, refactor ] # TODO SPLIT ACTIONS
+    # TODO ADD RELEASE and RELEASE TIME
   workflow_dispatch:
 
 jobs:

@@ -1,7 +1,7 @@
 import json
 from .utils import logger
 
-__all__ = ['Event', 'listener']
+__all__ = ['Event', 'Listener']
 
 
 class Event:
@@ -31,6 +31,7 @@ class Event:
         self.body = json.loads(event['body'])
         self.type = self.define_type()
         self.key = self.define_key()
+        self.chat_id = self.body['message']['chat']['id']
 
     def define_key(self):
         return self.__event_key_word_mapping[self.type](self.body)
@@ -65,11 +66,7 @@ class Listener:
     def _actions_by_type(self, event_type):
         return self.functions[event_type]
 
-    def execute(self, event: Event):
+    def execute(self, event: Event, chat_id):
         func = self._actions_by_type(event.type)[event.key]
         logger.info(f'{event.body=}', extra={'func': func.__name__})
-        return func(event.body)
-
-
-listener = Listener()
-
+        return func(event.body, chat_id)
