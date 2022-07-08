@@ -3,12 +3,13 @@ import boto3
 from src.telegram.v1 import Event, response, HTTP200
 from src.telegram.v1.botchat import Listener
 
-# endpoint_url = 'https://storage.yandexcloud.net'
-# prefix = 'photo/'
-# bucket = 'booking'
-#
-# session_ = boto3.session.Session()
-# s3 = session_.client(service_name='s3', endpoint_url=endpoint_url)
+endpoint_url = 'https://storage.yandexcloud.net'
+prefix = 'photo/'
+bucket = 'booking'
+
+s3_resource = boto3.resource("s3", endpoint_url=endpoint_url)
+s3_bucket = s3_resource.Bucket(bucket)
+
 
 texts = [  # TODO make possibility to change description
     """
@@ -44,25 +45,15 @@ def main_menu(body: dict, chat_id):
         }
 
 
-# def get_url_photos() -> list:
-#     expression = f"{endpoint_url}/{bucket}/{{key}}".format
-#     contents = s3.list_objects(Bucket=bucket, Prefix=prefix)['Contents']
-#     return [expression(key=key['Key']) for key in contents if key['Size']]
+def get_url_photos() -> list:
+    expression = f"{endpoint_url}/{bucket}/{{key}}".format
+    contents = s3_bucket.objects.filter(Prefix=prefix)
+    return [expression(key=key.key) for key in contents if key.size]
 
 
 def get_photos_in_media_format():
-    return [{'type': 'photo',
-             'media': 'https://storage.yandexcloud.net/booking/photo/poselok-zaostrove-snyat-dom-posutochno-pribrezhnaya-ulitca-393699-443839423.jpeg'},
-            {'type': 'photo',
-             'media': 'https://storage.yandexcloud.net/booking/photo/poselok-zaostrove-snyat-dom-posutochno-pribrezhnaya-ulitca-393699-443839424.jpeg'},
-            {'type': 'photo',
-             'media': 'https://storage.yandexcloud.net/booking/photo/poselok-zaostrove-snyat-dom-posutochno-pribrezhnaya-ulitca-393699-443839425.jpeg'},
-            {'type': 'photo',
-             'media': 'https://storage.yandexcloud.net/booking/photo/poselok-zaostrove-snyat-dom-posutochno-pribrezhnaya-ulitca-393699-443839439.jpeg'},
-            {'type': 'photo',
-             'media': 'https://storage.yandexcloud.net/booking/photo/poselok-zaostrove-snyat-dom-posutochno-pribrezhnaya-ulitca-393699-443839446.jpeg'}]
-    # mapping_attr: callable = lambda x: {'type': 'photo', 'media': x}
-    # return [mapping_attr(i) for i in get_url_photos()]
+    mapping_attr: callable = lambda x: {'type': 'photo', 'media': x}
+    return [mapping_attr(i) for i in get_url_photos()]
 
 
 @response(HTTP200)
@@ -83,5 +74,5 @@ def photo(body: dict, chat_id):
 
 listener = Listener()
 listener.add(main_menu, Event.Type.COMMAND, '/start')
-listener.add(photo, Event.Type.TEXT, 'Посмотреть фото')
+listener.add(photo, Event.Type.TEXT, '🏠 Дом')
 listener.add(main_menu, Event.Type.TEXT, 'Назад')
