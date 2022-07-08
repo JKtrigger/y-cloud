@@ -1,3 +1,4 @@
+import boto3
 import pytest
 
 from src.v1_application import get_url_photos, get_photos_in_media_format
