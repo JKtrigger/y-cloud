@@ -80,7 +80,7 @@ def location(body: dict, chat_id):
         'latitude': 54.9564385,
         'longitude': 20.260593,
         'chat_id': chat_id,
-        'reply_markup': {'keyboard': [
+        'reply_markup': {'keyboard': [  # TODO make chain menu logic
             ['🏠 Дом', '☭ Участок'],
             ['⚓ Море', 'Назад']
         ], 'resize_keyboard': True},
@@ -89,6 +89,7 @@ def location(body: dict, chat_id):
 
 listener = Listener()
 listener.add(main_menu, Event.Type.COMMAND, '/start')
+listener.add(main_menu, Event.Type.COMMAND, '/start@HelloPreBookBot')
 listener.add(photo, Event.Type.TEXT, '🏠 Дом')
 listener.add(location, Event.Type.TEXT, '📍 Локация')
 listener.add(main_menu, Event.Type.TEXT, 'Назад')
