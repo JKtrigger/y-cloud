@@ -37,4 +37,4 @@ jobs:
           zip release.zip -r ./src/* requirements.txt -x '*.pyc' '*__pycache__*'
           aws --endpoint-url=https://storage.yandexcloud.net s3 cp release.zip s3://${AWS_BUCKET}/
           /home/runner/yandex-cloud/bin/yc config set token ${IAM_TOKEN} 
-          /home/runner/yandex-cloud/bin/yc serverless function version create --function-name=menu --runtime python39 --entrypoint src.v1_index.entry_point --memory 128mb --execution-timeout 5s --source-path ./release.zip --folder-id b1gs53dk9tg8j64f05uu --environment payment_token=${PAYMENT_TOKEN} AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+          /home/runner/yandex-cloud/bin/yc serverless function version create --function-name=menu --runtime python39 --entrypoint src.v1_index.entry_point --memory 128mb --execution-timeout 5s --source-path ./release.zip --folder-id b1gs53dk9tg8j64f05uu --environment payment_token=${PAYMENT_TOKEN} --environment AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} --environment AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
