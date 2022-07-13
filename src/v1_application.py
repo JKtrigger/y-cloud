@@ -39,7 +39,7 @@ def main_menu(body: dict, chat_id):
             'chat_id': chat_id,
             'text': 'any text',
             'reply_markup': {'keyboard': [
-                ['🏠 Дом', '☭ Участок'],
+                ['🏠 Дом', '☭ Участок', '📍 Локация'],
                 ['⚓ Море', 'Назад']
             ], 'resize_keyboard': True},
         }
@@ -72,7 +72,23 @@ def photo(body: dict, chat_id):
     }
 
 
+@response(HTTP200)
+def location(body: dict, chat_id):
+    return {
+        'method': 'sendLocation',  # is can be sending as document ?  sendDocument
+        # sendPhoto sendMediaGroup,
+        'latitude': 54.9564385,
+        'longitude': 20.260593,
+        'chat_id': chat_id,
+        'reply_markup': {'keyboard': [
+            ['🏠 Дом', '☭ Участок'],
+            ['⚓ Море', 'Назад']
+        ], 'resize_keyboard': True},
+    }
+
+
 listener = Listener()
 listener.add(main_menu, Event.Type.COMMAND, '/start')
 listener.add(photo, Event.Type.TEXT, '🏠 Дом')
+listener.add(location, Event.Type.TEXT, '📍 Локация')
 listener.add(main_menu, Event.Type.TEXT, 'Назад')
