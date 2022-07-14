@@ -29,10 +29,11 @@ def event_logger(func):  # TODO  utils level application
         # context -> None for local debugging
         extra = {'func': func.__name__}
         try:
-            chat_id = json.loads(lambda_event['body'])['message']['chat']['id']
-        except KeyError as error:
-            print(f'{error=}')
-            print(f'{lambda_event=}')
+            # avoid error if chat was added to group
+            body = json.loads(lambda_event['body'])
+            chat_id = body.get('message', body.get('lambda_event'))['chat']['id']
+        except Exception as error:
+            logger.error(f'{error=}', extra=extra)
             return
         try:
             event = Event(lambda_event)
