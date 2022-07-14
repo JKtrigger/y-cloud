@@ -28,7 +28,12 @@ def event_logger(func):  # TODO  utils level application
     def wrapped(lambda_event, context=None):
         # context -> None for local debugging
         extra = {'func': func.__name__}
-        chat_id = json.loads(lambda_event['body'])['message']['chat']['id']
+        try:
+            chat_id = json.loads(lambda_event['body'])['message']['chat']['id']
+        except KeyError as error:
+            print(f'{error=}')
+            print(f'{lambda_event=}')
+            return
         try:
             event = Event(lambda_event)
             logger.info(f'{event=}')
