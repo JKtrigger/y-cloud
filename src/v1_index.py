@@ -28,13 +28,14 @@ def event_logger(func):  # TODO  utils level application
     def wrapped(lambda_event, context=None):
         # context -> None for local debugging
         extra = {'func': func.__name__}
+        chat_id = -1001613170160
         try:
             # avoid error if chat was added to group
             body = json.loads(lambda_event['body'])
             chat_id = body.get('message', body.get('lambda_event'))['chat']['id']
         except Exception as error:
             logger.error(f'{error=}', extra=extra)
-            return
+            return error_400(f'{error}', chat_id)
         try:
             event = Event(lambda_event)
             logger.info(f'{event=}')
