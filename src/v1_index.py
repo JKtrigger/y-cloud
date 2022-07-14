@@ -28,10 +28,11 @@ def event_logger(func):  # TODO  utils level application
     def wrapped(lambda_event, context=None):
         # context -> None for local debugging
         extra = {'func': func.__name__}
-        event = Event(lambda_event)
-        logger.info(f'{event=}')
-        chat_id = event.chat_id
+        chat_id = json.loads(lambda_event['body'])['message']['chat']['id']
         try:
+            event = Event(lambda_event)
+            logger.info(f'{event=}')
+            # chat_id = event.chat_id
             result = func(event, chat_id)
             status_code = result['statusCode']
             body = json.loads(result['body'])
