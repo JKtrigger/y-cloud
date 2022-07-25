@@ -82,6 +82,28 @@ def default_callback():
 
 
 def validate_date(body, chat_id):
+    text = body['callback_query']['data']
+    if body['callback_query']['data'] in calendar.months:
+        days = calendar.months[text]
+        buttons = map(
+            lambda week: [
+                {
+                    'text': day,
+                    'callback_data':
+                        f'{calendar.to_day.year}-{text}-{day}' if day != '_' else 'ignore'
+                }
+                for day in week], days
+        )
+        return {
+            'method': 'editMessageText',
+            'chat_id': chat_id,
+            'text': f'Выберите день ',
+            'reply_markup': {
+                'inline_keyboard': [*buttons],
+                'resize_keyboard': True
+            },
+        }
+
     date = datetime.strptime(body['callback_query']['data'], '%Y-%b-%d')
     return {
         'method': 'editMessageText',
