@@ -99,7 +99,10 @@ def validate_date(body, chat_id):
             'chat_id': chat_id,
             'text': f'Выберите день ',
             'reply_markup': {
-                'inline_keyboard': [*buttons],
+                'inline_keyboard': [
+                    [{'text': '_', 'callback_data': 'ignore'},
+                     {'text': '_', 'callback_data': 'ignore'}]
+                ],
                 'resize_keyboard': True
             },
         }
