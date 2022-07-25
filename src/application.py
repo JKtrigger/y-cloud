@@ -4,7 +4,7 @@ from src.utils import get_photos_in_media_format
 main_key_board = {
     'keyboard': [
             ['🏠 Дом', '☭ Участок', '📅'],
-            ['⚓ Море', 'Назад']
+            ['⚓ Море', '📍 Локация']
     ],
     'resize_keyboard': True
 }
@@ -89,5 +89,4 @@ def months(_body: dict, chat_id):
 listener.add(main_menu, Event.Type.COMMAND, '/start')
 listener.add(photo, Event.Type.TEXT, '🏠 Дом')
 listener.add(location, Event.Type.TEXT, '📍 Локация')
-listener.add(main_menu, Event.Type.TEXT, 'Назад')
 listener.add(months, Event.Type.TEXT, '📅')
