@@ -1,5 +1,6 @@
 import json
 
+from src.application import main_key_board
 from src.index import entry_point
 from test.bin import uncode_event
 from test.unit.event import event_command
@@ -22,3 +23,4 @@ def test_start_command(listener_fixture):
     result = entry_point(event_command)
     assert result['statusCode'] == 200
     assert json.loads(result['body'])["chat_id"] == 2
+    assert json.loads(result['body'])['reply_markup'] == main_key_board

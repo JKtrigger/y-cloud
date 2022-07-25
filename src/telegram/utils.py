@@ -143,6 +143,9 @@ class Event:
         for type_ in self.__type_mapping:
             if type_ in self.body:
                 return self.__type_mapping[type_]
+            if 'message' in self.body:
+                if type_ in self.body['message']:
+                    return self.__type_mapping[type_]
         return self.Type.TEXT
 
     def __repr__(self):
