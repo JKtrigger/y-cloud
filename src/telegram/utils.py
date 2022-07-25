@@ -97,12 +97,9 @@ def validate_date(body, chat_id):
         return {
             'method': 'editMessageText',
             'chat_id': chat_id,
-            'text': f'Выберите день ',
+            'text': 'Выберите день',
             'reply_markup': {
-                'inline_keyboard': [
-                    [{'text': '_', 'callback_data': 'ignore'},
-                     {'text': '_', 'callback_data': 'ignore'}]
-                ],
+                'inline_keyboard': [[{"text": "_", "callback_data": "1"}]],
                 'resize_keyboard': True
             },
         }
