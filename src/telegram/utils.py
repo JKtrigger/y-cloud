@@ -95,11 +95,12 @@ def validate_date(body, chat_id):
                 for day in week], days
         )
         return {
+            'message_id': body['callback_query']['message']['message_id']
             'method': 'editMessageText',
             'chat_id': chat_id,
             'text': 'Выберите день',
             'reply_markup': {
-                'inline_keyboard': [[{"text": "_", "callback_data": "1"}]],
+                'inline_keyboard': [*buttons],
                 'resize_keyboard': True
             },
         }
