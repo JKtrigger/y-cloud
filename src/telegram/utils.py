@@ -98,7 +98,7 @@ def validate_date(body, chat_id):
             'message_id': body['callback_query']['message']['message_id'],
             'method': 'editMessageText',
             'chat_id': chat_id,
-            'text': 'Выберите день',
+            'text': f'{text}',
             'reply_markup': {
                 'inline_keyboard': [*buttons],
                 'resize_keyboard': True
@@ -107,9 +107,10 @@ def validate_date(body, chat_id):
 
     date = datetime.strptime(body['callback_query']['data'], '%Y-%b-%d')
     return {
+        'message_id': body['callback_query']['message']['message_id'],
         'method': 'editMessageText',
         'chat_id': chat_id,
-        'text': f'Выбрана дата с {date}',
+        'text': f'Выбрана дата с {date.date()}',
         'reply_markup': {
             'inline_keyboard': calendar.month_buttons,
             'resize_keyboard': True
