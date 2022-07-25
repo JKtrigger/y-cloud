@@ -1,42 +1,9 @@
-"""Entry point to run lambda
-"""
-import json
-
-from .application import commands, callbacks, texts, payment
-from .telegram import BotChat
+from src.application import listener
+from src.telegram.utils import event_handler
 
 
-def default(text):
-    """Temp code
-    """
-    return {
-        'statusCode': 200,
-        'headers': {'Content-Type': 'application/json'},
-        'isBase64Encoded': False,
-        'body': json.dumps({
-            'method': 'sendMessage',
-            'chat_id': 'default',
-            'text': text
-        })
-    }
-
-
-def handler(event, _context):
+@event_handler
+def entry_point(event, chat_id):
     """handler of all calls from telegram
     """
-    data = BotChat(event)
-    print(f"{event=}")
-    print(f"{data=}")
-    try:
-        if data.payment:
-            return payment.execute(BotChat(event))
-        if data.command:
-            return commands.execute(BotChat(event))
-        if data.callback:
-            return callbacks.execute(BotChat(event))
-        if not (data.command and data.callback):
-            return texts.execute(BotChat(event))
-        return default(text="not found")
-    except KeyError as error:
-        print(error)
-        return default(text=str(error))
+    return listener.execute(event, chat_id)

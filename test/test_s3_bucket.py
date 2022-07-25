@@ -1,6 +1,6 @@
 import pytest
 
-from src.v1_application import get_photos_in_media_format, get_url_photos
+from src.utils import get_photos_in_media_format, get_url_photos
 
 
 @pytest.mark.skip("manual test")
