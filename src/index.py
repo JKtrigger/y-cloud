@@ -1,3 +1,6 @@
+"""
+entry point for yandex function
+"""
 from src.application import listener
 from src.telegram.utils import event_handler
 

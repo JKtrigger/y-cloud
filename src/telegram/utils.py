@@ -6,7 +6,7 @@ from datetime import datetime
 from functools import wraps
 
 __all__ = [
-    'logger', 'Event', 'calendar', 'listener', 'response_200'
+    'logger', 'Event', 'calendar', 'listener', 'response_200', 'event_handler'
     ]
 
 
