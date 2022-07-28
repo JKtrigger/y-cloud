@@ -104,6 +104,7 @@ def _define_month_callback(body, chat_id):
         'jul': 'Июль',
         'aug': 'Август',
         'sep': 'Сентябрь',
+        'oct': 'Октябрь',
         'nov': 'Ноябрь',
         'dec': 'Декабрь'
     }
