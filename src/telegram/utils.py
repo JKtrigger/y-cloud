@@ -97,8 +97,8 @@ def _define_month_callback(body, chat_id):
         buttons = map(
             lambda week: [
                 {
-                    'text': f"<s>{day}</s>",
-                    'parse_mode': 'HTML',
+                    'text': f"~{day}~",
+                    'parse_mode': 'MarkdownV2',
                     'callback_data':
                         f'{calendar.to_day.year}-{text}-{day}' if day != '_' else 'ignore'
                 }
