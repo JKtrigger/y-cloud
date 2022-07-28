@@ -75,7 +75,7 @@ def define_callbacks():
                 'chat_id': chat_id,
                 'text': 'Выбери день',
                 'reply_markup': {
-                        'inline_keyboard': [week_names, *buttons],
+                        'inline_keyboard': [week_names],
                         'resize_keyboard': True
                    },
             }
