@@ -59,6 +59,15 @@ def define_callbacks():
                 # TODO 'ignore' as constant
                 for day in week], days
         )
+        week_names = [
+            {'text': 'ПН', 'callback_data': 'ignore'},
+            {'text': 'ВТ', 'callback_data': 'ignore'},
+            {'text': 'СР', 'callback_data': 'ignore'},
+            {'text': 'ЧТ', 'callback_data': 'ignore'},
+            {'text': 'ПТ', 'callback_data': 'ignore'},
+            {'text': 'СБ', 'callback_data': 'ignore'},
+            {'text': 'ВС', 'callback_data': 'ignore'},
+        ]
 
         def fun(body: dict, chat_id):
             return {
@@ -67,7 +76,7 @@ def define_callbacks():
                 'chat_id': chat_id,
                 'text': 'Выбери день',
                 'reply_markup': {
-                        'inline_keyboard': [*buttons],
+                        'inline_keyboard': [*week_names, *buttons],
                         'resize_keyboard': True
                    },
             }
@@ -108,7 +117,6 @@ def count_days(_body: dict, chat_id):
     if _body['callback_query']['data'] == 'plus':
         operator_ = operator.add
     text = _body['callback_query']['message']['text']
-    # С {date.date()}. Количество дней 1
     count = [int(s) for s in text.split() if s.isdigit()][0]
     count = operator_(count, 1)
     if count == 31:
