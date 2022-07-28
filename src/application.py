@@ -56,7 +56,6 @@ def define_callbacks():
                     'callback_data':
                         f'{calendar.to_day.year}-{month}-{day}' if day != '_' else 'ignore'
                 }
-                # TODO 'ignore' as constant
                 for day in week], days
         )
         week_names = [
