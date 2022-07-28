@@ -130,7 +130,6 @@ class Event:
         PAYMENT = 'payment'
 
     __type_mapping = {
-        # TODO
         'callback_query': Type.CALLBACK,
         'pre_checkout_query': Type.PAYMENT,
         'entities': Type.COMMAND
@@ -231,7 +230,6 @@ class CalendarChain:
     months: dict = TelegramCalendar().format_period(to_day.year, to_day.month)
     buttons_in_line = 4
     chain_ignore = "ignore"
-    chain_cancel = "cancel"
 
     @property
     def month_buttons(self):
@@ -264,10 +262,6 @@ class CalendarChain:
             last_menu_item = self.inline_keyboard[self.menu_lines - 1]
             for each_missing_button in range(0, self.buttons_in_line - self.rest_division):
                 last_menu_item.append({"text": "_", "callback_data": self.chain_ignore})
-            last_menu_item[self.buttons_in_line - 1] = {
-                "text": self.chain_cancel,
-                "callback_data": self.chain_cancel
-            }
 
 
 logger = define_logger()

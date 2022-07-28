@@ -86,7 +86,17 @@ def months(_body: dict, chat_id):
     }
 
 
+@response_200
+def ignore(_body: dict, chat_id):
+    return {
+        'method': 'sendMessage',
+        'chat_id': chat_id,
+        'text': _body
+    }
+
+
 listener.add(main_menu, Event.Type.COMMAND, '/start')
+listener.add(ignore, Event.Type.CALLBACK, 'ignore')
 listener.add(photo, Event.Type.TEXT, '🏠 Дом')
 listener.add(location, Event.Type.TEXT, '📍 Локация')
 listener.add(months, Event.Type.TEXT, '📅')
