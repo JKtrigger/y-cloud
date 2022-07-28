@@ -22,6 +22,21 @@ class CustomFilter(logging.Filter):
         return True
 
 
+month = {
+        'jan': 'Январь',
+        'feb': 'Февраль',
+        'mar': 'Март',
+        'apr': 'Апрель',
+        'may': 'Май',
+        'jun': 'Июнь',
+        'jul': 'Июль',
+        'aug': 'Август',
+        'sep': 'Сентябрь',
+        'oct': 'Октябрь',
+        'nov': 'Ноябрь',
+        'dec': 'Декабрь'
+    }
+
 def define_logger():
     format_string = (
         "[%(asctime)s] [%(levelname)s] [%(funcName)s -> %(func)s]"
@@ -83,6 +98,10 @@ def default_callback():
     return response_200(_define_month_callback)
 
 
+def to_strike(string: str):
+    return ''.join(chain.from_iterable(zip(f'{string}', repeat('\u0336'))))
+
+
 def _define_month_callback(body, chat_id):
     week_names = [
         {'text': 'ПН', 'callback_data': 'ignore'},
@@ -94,26 +113,13 @@ def _define_month_callback(body, chat_id):
         {'text': 'ВС', 'callback_data': 'ignore'},
     ]
     text = body['callback_query']['data']  # month
-    month = {
-        'jan': 'Январь',
-        'feb': 'Февраль',
-        'mar': 'Март',
-        'apr': 'Апрель',
-        'may': 'Май',
-        'jun': 'Июнь',
-        'jul': 'Июль',
-        'aug': 'Август',
-        'sep': 'Сентябрь',
-        'oct': 'Октябрь',
-        'nov': 'Ноябрь',
-        'dec': 'Декабрь'
-    }
+
     if body['callback_query']['data'] in calendar.months:
         days = calendar.months[text]
         buttons = map(
             lambda week: [
                 {
-                    'text': ''.join(chain.from_iterable(zip(f'{day}', repeat('\u0336')))),
+                    'text': day,
                     'callback_data':
                         f'{calendar.to_day.year}-{text}-{day}' if day != '_' else 'ignore'
                 }
@@ -275,7 +281,7 @@ class CalendarChain:
         """Populate buttons for line in menu lines
         """
         self.inline_keyboard = []
-        buttons = [{"text": month_name, "callback_data": month_name} for month_name in self.months]
+        buttons = [{"text": month.get(month_name)[:3], "callback_data": month_name} for month_name in self.months]
         bil = self.buttons_in_line
         for index in range(0, self.menu_lines):
             self.inline_keyboard.append(buttons[index * bil: index * bil + bil])
