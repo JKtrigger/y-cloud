@@ -9,6 +9,8 @@ __all__ = [
     'logger', 'Event', 'calendar', 'listener', 'response_200', 'event_handler'
     ]
 
+from itertools import chain, repeat
+
 
 class CustomFilter(logging.Filter):
     """
@@ -110,7 +112,7 @@ def _define_month_callback(body, chat_id):
         buttons = map(
             lambda week: [
                 {
-                    'text': f"\u0336{day}\u0336",
+                    'text': ''.join(chain.from_iterable(zip(f'{day}', repeat('\u0336')))),
                     'callback_data':
                         f'{calendar.to_day.year}-{text}-{day}' if day != '_' else 'ignore'
                 }
