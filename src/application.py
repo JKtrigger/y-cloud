@@ -114,7 +114,7 @@ def count_days(_body: dict, chat_id):
     if count == 0:
         count = 30
     return {
-        'method': 'editMessageText',
+        'method': 'sendMessage',
         'chat_id': chat_id,
         'text': f"Количество дней {count}",
         'reply_markup': {
