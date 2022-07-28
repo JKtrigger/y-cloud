@@ -92,6 +92,19 @@ def _define_month_callback(body, chat_id):
         {'text': 'ВС', 'callback_data': 'ignore'},
     ]
     text = body['callback_query']['data']  # month
+    month = {
+        'jan': 'Январь',
+        'feb': 'Февраль',
+        'mar': 'Март',
+        'apr': 'Апрель',
+        'may': 'Май',
+        'jun': 'Июнь',
+        'jul': 'Июль',
+        'aug': 'Август',
+        'sep': 'Сентябрь',
+        'nov': 'Ноябрь',
+        'dec': 'Декабрь'
+    }
     if body['callback_query']['data'] in calendar.months:
         days = calendar.months[text]
         buttons = map(
@@ -107,7 +120,7 @@ def _define_month_callback(body, chat_id):
             'message_id': body['callback_query']['message']['message_id'],
             'method': 'editMessageText',
             'chat_id': chat_id,
-            'text': f'{text}',
+            'text': month[text],
             'reply_markup': {
                 'inline_keyboard': [week_names, *buttons],
                 'resize_keyboard': True
