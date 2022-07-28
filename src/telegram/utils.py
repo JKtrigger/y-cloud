@@ -83,7 +83,7 @@ def default_callback():
 
 def _define_month_callback(body, chat_id):
     week_names = [
-        {'text': 'ПН<', 'callback_data': 'ignore'},
+        {'text': 'ПН', 'callback_data': 'ignore'},
         {'text': 'ВТ', 'callback_data': 'ignore'},
         {'text': 'СР', 'callback_data': 'ignore'},
         {'text': 'ЧТ', 'callback_data': 'ignore'},
