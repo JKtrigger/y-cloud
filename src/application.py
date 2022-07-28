@@ -91,8 +91,8 @@ def ignore(_body: dict, chat_id):
     return {
         'method': 'editMessageText',
         'chat_id': chat_id,
-        'text': _body['text'],
-        'reply_markup': _body['reply_markup']
+        'text': _body['callback_query']['message']['text'],
+        'reply_markup': _body['callback_query']['message']['reply_markup']
     }
 
 
