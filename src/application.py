@@ -5,7 +5,7 @@ from src.utils import get_photos_in_media_format
 
 main_key_board = {
     'keyboard': [
-            ['🏠 Дом', '<s>☭ Участок</s>', '📅'],
+            ['🏠 Дом', '☭ Участок', '📅'],
             ['⚓ Море', '📍 Локация']
     ],
     'resize_keyboard': True
@@ -59,7 +59,7 @@ def define_callbacks():
                 for day in week], days
         )
         week_names = [
-            {'text': 'ПН', 'callback_data': 'ignore'},
+            {'text': '<s>ПН</s>', 'callback_data': 'ignore'},
             {'text': 'ВТ', 'callback_data': 'ignore'},
             {'text': 'СР', 'callback_data': 'ignore'},
             {'text': 'ЧТ', 'callback_data': 'ignore'},
