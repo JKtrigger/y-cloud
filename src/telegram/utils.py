@@ -37,6 +37,7 @@ month = {
         'dec': 'Декабрь'
     }
 
+
 def define_logger():
     format_string = (
         "[%(asctime)s] [%(levelname)s] [%(funcName)s -> %(func)s]"
@@ -114,14 +115,14 @@ def _define_month_callback(body, chat_id):
     ]
     text = body['callback_query']['data']  # month
 
-    if body['callback_query']['data'] in calendar.months:
+    if not body['callback_query']['data'] in calendar.months:
         days = calendar.months[text]
         available_days = available_days_(days, text)
         return {
             'message_id': body['callback_query']['message']['message_id'],
             'method': 'editMessageText',
             'chat_id': chat_id,
-            'text': month[text],
+            'text': body,
             'reply_markup': {
                 'inline_keyboard': [week_names, *available_days],
                 'resize_keyboard': True
