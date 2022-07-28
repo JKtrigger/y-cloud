@@ -122,7 +122,7 @@ def _define_month_callback(body, chat_id):
             'message_id': body['callback_query']['message']['message_id'],
             'method': 'editMessageText',
             'chat_id': chat_id,
-            'text': body,
+            'text': month[text],
             'reply_markup': {
                 'inline_keyboard': [week_names, *available_days],
                 'resize_keyboard': True
@@ -151,9 +151,7 @@ def _define_month_callback(body, chat_id):
 
 
 def available_days_(days, text):
-    # past is not available
     # TODO: calendar yandex get available days
-    #
     res = []
     for week in days:
         sub_res = []
@@ -163,7 +161,7 @@ def available_days_(days, text):
                     datetime.now().date() -
                     datetime.strptime(f'{calendar.to_day.year}-{text}-{day}', '%Y-%b-%d').date()
                 ).days
-                if condition_count <= 0:
+                if condition_count >= 0:
                     sub_res.append({'text': to_strike(day), 'callback_data': 'ignore'})
                 else:
                     sub_res.append({'text': day, 'callback_data': f'{calendar.to_day.year}-{text}-{day}'})
