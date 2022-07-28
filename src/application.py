@@ -45,44 +45,6 @@ def location(_body: dict, chat_id):
     }
 
 
-def define_callbacks():
-    for month, days in calendar.months.items():
-        buttons = map(
-            # TODO too hard to read
-            # '%Y-%b-%d' - mask
-            lambda week: [
-                {
-                    'text': day,
-                    'callback_data':
-                        f'{calendar.to_day.year}-{month}-{day}' if day != '_' else 'ignore'
-                }
-                for day in week], days
-        )
-        week_names = [
-            {'text': '<s>ПН</s>', 'callback_data': 'ignore'},
-            {'text': 'ВТ', 'callback_data': 'ignore'},
-            {'text': 'СР', 'callback_data': 'ignore'},
-            {'text': 'ЧТ', 'callback_data': 'ignore'},
-            {'text': 'ПТ', 'callback_data': 'ignore'},
-            {'text': 'СБ', 'callback_data': 'ignore'},
-            {'text': 'ВС', 'callback_data': 'ignore'},
-        ]
-
-        def fun(body: dict, chat_id):
-            return {
-                'message_id': body['callback_query']['message']['message_id'],
-                'method': 'editMessageText',
-                'chat_id': chat_id,
-                'text': 'Выбери день',
-                'reply_markup': {
-                        'inline_keyboard': [week_names],
-                        'resize_keyboard': True
-                   },
-            }
-
-        listener.add(response_200(fun), Event.Type.CALLBACK, month)
-
-
 @response_200
 def months(_body: dict, chat_id):
     return {

@@ -82,6 +82,15 @@ def default_callback():
 
 
 def _define_month_callback(body, chat_id):
+    week_names = [
+        {'text': 'ПН<', 'callback_data': 'ignore'},
+        {'text': 'ВТ', 'callback_data': 'ignore'},
+        {'text': 'СР', 'callback_data': 'ignore'},
+        {'text': 'ЧТ', 'callback_data': 'ignore'},
+        {'text': 'ПТ', 'callback_data': 'ignore'},
+        {'text': 'СБ', 'callback_data': 'ignore'},
+        {'text': 'ВС', 'callback_data': 'ignore'},
+    ]
     text = body['callback_query']['data']  # month
     if body['callback_query']['data'] in calendar.months:
         days = calendar.months[text]
@@ -100,7 +109,7 @@ def _define_month_callback(body, chat_id):
             'chat_id': chat_id,
             'text': f'{text}',
             'reply_markup': {
-                'inline_keyboard': [*buttons],
+                'inline_keyboard': [week_names, *buttons],
                 'resize_keyboard': True
             },
         }
