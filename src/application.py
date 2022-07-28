@@ -119,7 +119,7 @@ def count_days(_body: dict, chat_id):
         'message_id': _body['callback_query']['message']['message_id'],
         'method': 'editMessageText',
         'chat_id': chat_id,
-        'text': text[:29] + f"{count}",
+        'text': text[:29] + f" {count}",
         'reply_markup': {
             'inline_keyboard': _body['callback_query']['message']['reply_markup']['inline_keyboard'],
             'resize_keyboard': True
