@@ -126,7 +126,8 @@ def count_days(_body: dict, chat_id):
 
 listener.add(main_menu, Event.Type.COMMAND, '/start')
 listener.add(ignore, Event.Type.CALLBACK, 'ignore')
-listener.add(ignore, Event.Type.CALLBACK, 'count_days')
+listener.add(count_days, Event.Type.CALLBACK, 'plus')
+listener.add(count_days, Event.Type.CALLBACK, 'minus')
 listener.add(photo, Event.Type.TEXT, '🏠 Дом')
 listener.add(location, Event.Type.TEXT, '📍 Локация')
 listener.add(months, Event.Type.TEXT, '📅')
