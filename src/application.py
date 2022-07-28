@@ -89,7 +89,7 @@ def months(_body: dict, chat_id):
 @response_200
 def ignore(_body: dict, chat_id):
     return {
-        'method': 'editMessageText',
+        'method': 'sendMessage',
         'chat_id': chat_id,
         'text': _body['callback_query']['message']['text'],
         'reply_markup': {
