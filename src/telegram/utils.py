@@ -115,7 +115,6 @@ def _define_month_callback(body, chat_id):
             'inline_keyboard': [
                 [
                     {'text': '-', 'callback_data': 'minus'},
-                    {'text': '', 'callback_data': '_'},
                     {'text': '+', 'callback_data': 'plus'}
                 ],
                 [

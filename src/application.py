@@ -91,6 +91,7 @@ def months(_body: dict, chat_id):
 @response_200
 def ignore(_body: dict, chat_id):
     return {
+        'message_id': _body['callback_query']['message']['message_id'],
         'method': 'editMessageText',
         'chat_id': chat_id,
         'text': _body['callback_query']['message']['text'],
@@ -107,6 +108,7 @@ def count_days(_body: dict, chat_id):
     if _body['callback_query']['data'] == 'plus':
         operator_ = operator.add
     text = _body['callback_query']['message']['text']
+    # С {date.date()}. Количество дней 1
     count = [int(s) for s in text.split() if s.isdigit()][0]
     count = operator_(count, 1)
     if count == 31:
@@ -114,9 +116,10 @@ def count_days(_body: dict, chat_id):
     if count == 0:
         count = 30
     return {
-        'method': 'sendMessage',
+        'message_id': _body['callback_query']['message']['message_id'],
+        'method': 'editMessageText',
         'chat_id': chat_id,
-        'text': f"Количество дней {count}",
+        'text': text[:29] + f"{count}",
         'reply_markup': {
             'inline_keyboard': _body['callback_query']['message']['reply_markup']['inline_keyboard'],
             'resize_keyboard': True
