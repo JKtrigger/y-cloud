@@ -91,7 +91,7 @@ def ignore(_body: dict, chat_id):
     return {
         'method': 'sendMessage',
         'chat_id': chat_id,
-        'text': _body
+        # 'text': _body
     }
 
 
