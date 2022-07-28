@@ -78,11 +78,11 @@ def event_handler(func):
 
 
 def default_callback():
-    return response_200(validate_date)
+    return response_200(_define_month_callback)
 
 
-def validate_date(body, chat_id):
-    text = body['callback_query']['data']
+def _define_month_callback(body, chat_id):
+    text = body['callback_query']['data']  # month
     if body['callback_query']['data'] in calendar.months:
         days = calendar.months[text]
         buttons = map(
@@ -110,9 +110,18 @@ def validate_date(body, chat_id):
         'message_id': body['callback_query']['message']['message_id'],
         'method': 'editMessageText',
         'chat_id': chat_id,
-        'text': f'Выбрана дата с {date.date()}',
+        'text': f'С {date.date()}. Количество дней 1',
         'reply_markup': {
-            'inline_keyboard': calendar.month_buttons,
+            'inline_keyboard': [
+                [
+                    {'text': '-', 'callback_data': 'minus'},
+                    {'text': '', 'callback_data': '_'},
+                    {'text': '+', 'callback_data': 'plus'}
+                ],
+                [
+                    {'text': 'Оплатить', 'callback_data': 'payment'}
+                ]
+            ],
             'resize_keyboard': True
         },
     }

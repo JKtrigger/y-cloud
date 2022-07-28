@@ -1,3 +1,5 @@
+import operator
+
 from src.telegram.utils import Event, calendar, listener, response_200
 from src.utils import get_photos_in_media_format
 
@@ -89,7 +91,7 @@ def months(_body: dict, chat_id):
 @response_200
 def ignore(_body: dict, chat_id):
     return {
-        'method': 'sendMessage',
+        'method': 'editMessageText',
         'chat_id': chat_id,
         'text': _body['callback_query']['message']['text'],
         'reply_markup': {
@@ -99,8 +101,32 @@ def ignore(_body: dict, chat_id):
     }
 
 
+@response_200
+def count_days(_body: dict, chat_id):
+    operator_ = operator.sub
+    if _body['callback_query']['data'] == 'plus':
+        operator_ = operator.add
+    text = _body['callback_query']['message']['text']
+    count = [int(s) for s in text.split() if s.isdigit()][0]
+    count = operator_(count, 1)
+    if count == 31:
+        count = 1
+    if count == 0:
+        count = 30
+    return {
+        'method': 'editMessageText',
+        'chat_id': chat_id,
+        'text': f"Количество дней {count}",
+        'reply_markup': {
+            'inline_keyboard': _body['callback_query']['message']['reply_markup']['inline_keyboard'],
+            'resize_keyboard': True
+        }
+    }
+
+
 listener.add(main_menu, Event.Type.COMMAND, '/start')
 listener.add(ignore, Event.Type.CALLBACK, 'ignore')
+listener.add(ignore, Event.Type.CALLBACK, 'count_days')
 listener.add(photo, Event.Type.TEXT, '🏠 Дом')
 listener.add(location, Event.Type.TEXT, '📍 Локация')
 listener.add(months, Event.Type.TEXT, '📅')
