@@ -115,7 +115,7 @@ def _define_month_callback(body, chat_id):
     ]
     text = body['callback_query']['data']  # month
 
-    if not body['callback_query']['data'] in calendar.months:
+    if text in calendar.months:
         days = calendar.months[text]
         available_days = available_days_(days, text)
         return {
@@ -158,10 +158,11 @@ def available_days_(days, text):
     for week in days:
         sub_res = []
         for day in week:
-            condition_count = (
-                datetime.now().date() - datetime.strptime(f'{calendar.to_day.year}-{text}-{day}', '%Y-%b-%d').date()
-            ).days
             if day != '_':
+                condition_count = (
+                    datetime.now().date() -
+                    datetime.strptime(f'{calendar.to_day.year}-{text}-{day}', '%Y-%b-%d').date()
+                ).days
                 if condition_count <= 0:
                     sub_res.append({'text': to_strike(day), 'callback_data': 'ignore'})
                 else:
