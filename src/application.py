@@ -92,7 +92,10 @@ def ignore(_body: dict, chat_id):
         'method': 'editMessageText',
         'chat_id': chat_id,
         'text': _body['callback_query']['message']['text'],
-        'reply_markup': _body['callback_query']['message']['reply_markup']
+        'reply_markup': {
+            'inline_keyboard': _body['callback_query']['message']['reply_markup']['inline_keyboard'],
+            'resize_keyboard': True
+        }
     }
 
 
