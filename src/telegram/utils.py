@@ -116,22 +116,14 @@ def _define_month_callback(body, chat_id):
 
     if body['callback_query']['data'] in calendar.months:
         days = calendar.months[text]
-        buttons = map(
-            lambda week: [
-                {
-                    'text': day,
-                    'callback_data':
-                        f'{calendar.to_day.year}-{text}-{day}' if day != '_' else 'ignore'
-                }
-                for day in week], days
-        )
+        available_days = available_days_(days, text)
         return {
             'message_id': body['callback_query']['message']['message_id'],
             'method': 'editMessageText',
             'chat_id': chat_id,
             'text': month[text],
             'reply_markup': {
-                'inline_keyboard': [week_names, *buttons],
+                'inline_keyboard': [week_names, *available_days],
                 'resize_keyboard': True
             },
         }
@@ -155,10 +147,28 @@ def _define_month_callback(body, chat_id):
             'resize_keyboard': True
         },
     }
-    # TODO
-    # check phrase in text (С 1 - по )
-    # check is available date from yandex calendar
-    # change text
+
+
+def available_days_(days, text):
+    # past is not available
+    # TODO: calendar yandex get available days
+    #
+    res = []
+    for week in days:
+        sub_res = []
+        for day in week:
+            condition_count = (
+                datetime.now().date() - datetime.strptime(f'{calendar.to_day.year}-{text}-{day}', '%Y-%b-%d').date()
+            ).days
+            if day != '_':
+                if condition_count <= 0:
+                    sub_res.append({'text': to_strike(day), 'callback_data': 'ignore'})
+                else:
+                    sub_res.append({'text': day, 'callback_data': f'{calendar.to_day.year}-{text}-{day}'})
+            else:
+                sub_res.append({'text': '_', 'callback_data': 'ignore'})
+        res.append(sub_res)
+    return res
 
 
 class Event:
