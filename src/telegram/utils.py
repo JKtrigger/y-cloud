@@ -81,7 +81,13 @@ def error_500(text, chat_id):
 def event_handler(func):
     @wraps(func)
     def wrapped(lambda_event, context=None):
+
+        body = json.loads(lambda_event['body'])
+        chat_id = body.get('message', body.get('lambda_event'))['chat']['id']
+        return error_500(f'{body}', chat_id)
+
         event = Event(lambda_event)
+
         try:
             logger.info(f'{event=}')
             result = func(event, event.chat_id)
