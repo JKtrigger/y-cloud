@@ -84,13 +84,11 @@ def event_handler(func):
     @wraps(func)
     def wrapped(lambda_event, context=None):
         body = json.loads(lambda_event['body'])
-        chat = body.get('message', body.get('lambda_event'))['chat']
-        chat_id = chat['id']
-
-        if 'group' in chat.get('type') and chat_id != service_chat:
-            return error_500(f'Группы не поддерживаются', chat_id)
-
-        event = Event(lambda_event)
+        try:
+            event = Event(lambda_event)
+        except Exception as error:
+            logger.error(f'{error=}')
+            return error_500(body, service_chat)
 
         try:
             logger.info(f'{event=}')
