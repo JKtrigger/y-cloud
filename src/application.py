@@ -103,7 +103,7 @@ def payment(_body: dict, chat_id):
         'message_id': _body['callback_query']['message']['message_id'],
         'method': 'sendMessage',
         'chat_id': service_chat,
-        'text': _body['callback_query']['message']['username'],
+        'text': _body,
     }
 
 
