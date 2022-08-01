@@ -1,5 +1,6 @@
 import operator
 
+from src.config import service_chat
 from src.telegram.utils import Event, calendar, listener, response_200
 from src.utils import get_photos_in_media_format
 
@@ -96,6 +97,16 @@ def count_days(_body: dict, chat_id):
     }
 
 
+@response_200
+def payment(_body: dict, chat_id):
+    return {
+        'message_id': _body['callback_query']['message']['message_id'],
+        'method': 'sendMessage',
+        'chat_id': service_chat,
+        'text': _body['callback_query']['message']['username'],
+    }
+
+
 listener.add(main_menu, Event.Type.COMMAND, '/start')
 listener.add(ignore, Event.Type.CALLBACK, 'ignore')
 listener.add(count_days, Event.Type.CALLBACK, 'plus')
@@ -103,3 +114,4 @@ listener.add(count_days, Event.Type.CALLBACK, 'minus')
 listener.add(photo, Event.Type.TEXT, '🏠 Дом')
 listener.add(location, Event.Type.TEXT, '📍 Локация')
 listener.add(months, Event.Type.TEXT, '📅')
+listener.add(months, Event.Type.CALLBACK, payment)

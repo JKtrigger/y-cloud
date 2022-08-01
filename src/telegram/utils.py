@@ -11,6 +11,8 @@ __all__ = [
 
 from itertools import chain, repeat
 
+from src.config import service_chat
+
 
 class CustomFilter(logging.Filter):
     """
@@ -81,10 +83,12 @@ def error_500(text, chat_id):
 def event_handler(func):
     @wraps(func)
     def wrapped(lambda_event, context=None):
-
         body = json.loads(lambda_event['body'])
-        chat_id = body.get('message', body.get('lambda_event'))['chat']['id']
-        return error_500(f'{body}', chat_id)
+        chat = body.get('message', body.get('lambda_event'))['chat']
+        chat_id = chat['id']
+
+        if 'group' in chat.get('type') and chat_id != service_chat:
+            return error_500(f'Группы не поддерживаются', chat_id)
 
         event = Event(lambda_event)
 
