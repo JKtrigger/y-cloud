@@ -76,7 +76,7 @@ def error_500(text, chat_id):
     return {
         'method': 'sendMessage',
         'chat_id': chat_id,
-        'text':  f'Error: {text}'
+        'text':  f'Error: {text} {chat_id}'
     }
 
 
