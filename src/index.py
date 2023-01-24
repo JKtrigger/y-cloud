@@ -9,4 +9,5 @@ from src.telegram.utils import event_handler
 def entry_point(event, chat_id):
     """handler of all calls from telegram
     """
+    print("event")
     return listener.execute(event, chat_id)
