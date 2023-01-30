@@ -14,6 +14,8 @@ def test_handler_un_exist_function(caplog):
 
 
 def test_handler_photo(listener_fixture):
+    import pdb
+    pdb.set_trace()
     result = entry_point(uncode_event.request_photo)
     assert result['statusCode'] == 200
     assert json.loads(result['body'])["chat_id"] == 293485218
@@ -24,3 +26,15 @@ def test_start_command(listener_fixture):
     assert result['statusCode'] == 200
     assert json.loads(result['body'])["chat_id"] == 2
     assert json.loads(result['body'])['reply_markup'] == main_key_board
+
+
+#def test_vitalii_dict():
+#   """
+ #   dir(dict)
+  #  """
+
+   # aa = dict()
+    #bb = dict
+    #cc = bb()
+    #assert aa == cc
+
