@@ -1,15 +1,20 @@
-# Telegram bot по подбору недвижимости
-Выполните установку требуемых библиотек из файла requirements.dev.txt
+### Telegram bot по аренде дома
+
+Пример:
+
+```bash
+pyenv install 3.9
 ```
+```bash
+pyenv virtualenv 3.9 y-cloud
+```
+```bash
+pyenv activate y-cloud
+```
+```bash
 pip install -r requirements.dev.txt
 ```
-Создайте виртуально окружение, c версией python 3.9
-
-Вот пример создания виртуального окружения на pyenv:
-```
-pyenv install 3.9
-pyenv virtualenv 3.9 имя_проекта
-pyenv activate имя проекта
+```bash
+pytest -s
 ```
 
-Запуск бота происходит по команде /start
