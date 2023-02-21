@@ -24,3 +24,4 @@ def test_start_command(listener_fixture):
     assert result['statusCode'] == 200
     assert json.loads(result['body'])["chat_id"] == 2
     assert json.loads(result['body'])['reply_markup'] == main_key_board
+
