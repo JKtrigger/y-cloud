@@ -111,7 +111,7 @@ def test(_body: dict, chat_id):
     return {
         'method': 'sendMessage',  # TODO find a docs
         'chat_id': chat_id,
-        'text': 'Привет мир',
+        'text': f"{_body=}",
         'reply_markup': main_key_board
     }
 
