@@ -7,7 +7,7 @@ from src.utils import get_photos_in_media_format
 main_key_board = {
     'keyboard': [
             ['🏠 Дом', '☭ Участок', '📅'],
-            ['⚓ Море', '📍 Локация']
+            ['⚓ Море', '📍 Локация', 'test' ]
     ],
     'resize_keyboard': True
 }
@@ -107,6 +107,15 @@ def payment(_body: dict, chat_id):
     }
 
 
+def test(_body: dict, chat_id):
+    return {
+        'method': 'sendMessage',  # TODO find a docs
+        'chat_id': chat_id,
+        'text': 'Привет мир',
+        'reply_markup': main_key_board
+    }
+
+
 listener.add(main_menu, Event.Type.COMMAND, '/start')
 listener.add(ignore, Event.Type.CALLBACK, 'ignore')
 listener.add(count_days, Event.Type.CALLBACK, 'plus')
@@ -115,3 +124,4 @@ listener.add(photo, Event.Type.TEXT, '🏠 Дом')
 listener.add(location, Event.Type.TEXT, '📍 Локация')
 listener.add(months, Event.Type.TEXT, '📅')
 listener.add(payment, Event.Type.CALLBACK, 'payment')
+listener.add(test,  Event.Type.TEXT, 'test')
