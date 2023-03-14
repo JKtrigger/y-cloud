@@ -7,7 +7,7 @@ from src.utils import get_photos_in_media_format
 main_key_board = {
     'keyboard': [
             ['🏠 Дом', '☭ Участок', '📅'],
-            ['⚓ Море', '📍 Локация']
+            ['⚓ Море', '📍 Локация', 'test' ]
     ],
     'resize_keyboard': True
 }
