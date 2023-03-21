@@ -107,6 +107,7 @@ def payment(_body: dict, chat_id):
     }
 
 
+@response_200
 def test(_body: dict, chat_id):
     return {
         'method': 'sendMessage',  # TODO find a docs
